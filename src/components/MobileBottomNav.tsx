@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Home, TrendingUp, CreditCard, FileText, Menu, X } from 'lucide-react';
 
-export default function MobileBottomNav() {
-  const [activeTab, setActiveTab] = useState('Dashboard');
+interface MobileBottomNavProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+export default function MobileBottomNav({ activeTab, setActiveTab }: MobileBottomNavProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navItemClass = (name: string) => `flex flex-col items-center justify-center w-full h-full gap-1 transition-colors ${

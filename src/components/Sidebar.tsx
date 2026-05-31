@@ -20,11 +20,11 @@ import { LanguageOpt } from '../types';
 
 interface SidebarProps {
   selectedLanguage: LanguageOpt;
+  activeItem: string;
+  setActiveItem: (item: string) => void;
 }
 
-export default function Sidebar({ selectedLanguage }: SidebarProps) {
-  const [activeItem, setActiveItem] = useState('Dashboard');
-
+export default function Sidebar({ selectedLanguage, activeItem, setActiveItem }: SidebarProps) {
   const isAmharic = selectedLanguage.code === 'am';
   const t = {
     dashboard: isAmharic ? "ዳሽቦርድ" : "Dashboard",

@@ -3,6 +3,7 @@ import { LanguageOpt } from "../types";
 import { Globe, Cloud, Bell, HelpCircle, Search, User, LogOut, Moon, Sun, RefreshCw, CheckCircle, AlertOctagon, X } from "lucide-react";
 import Sidebar from "./Sidebar";
 import MobileBottomNav from "./MobileBottomNav";
+import FinancialOverviewDashboard from "./FinancialOverviewDashboard";
 interface DashboardHomeProps {
   userEmail: string;
   selectedLanguage: LanguageOpt;
@@ -30,6 +31,7 @@ export default function DashboardHome({
   const [helpOpen, setHelpOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("Dashboard");
 
   // Translate labels for localized text
   const isAmharic = selectedLanguage.code === "am";
@@ -104,7 +106,7 @@ export default function DashboardHome({
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[var(--bg-core)] text-[var(--text-core)] transition-colors duration-300 font-sans" id="dashboard-main">
-      <Sidebar selectedLanguage={selectedLanguage} />
+      <Sidebar selectedLanguage={selectedLanguage} activeItem={activeTab} setActiveItem={setActiveTab} />
       <div className="flex-1 flex flex-col h-full relative overflow-y-auto pb-16 md:pb-0">
       
       {/* 
@@ -506,7 +508,9 @@ export default function DashboardHome({
               >
                 <X className="w-5 h-5" />
               </button>
-            </div>
+import FinancialOverviewDashboard from './components/FinancialOverviewDashboard';
+
+// ... existing code ...
 
             {/* Search Dropdown Results inside the overlay */}
             {searchFocused && (
@@ -537,32 +541,34 @@ export default function DashboardHome({
           </div>
         )}
 
-      {/* 
-        EMPTY BODY ACCORDING TO REQUIREMENTS ("for now lets create it with empty body except only header")
-        With an elegant, high-contrast, atmospheric presentation greeting the authenticated merchant.
-      */}
-      <div className="flex-grow max-w-7xl mx-auto px-6 py-12 flex flex-col items-center justify-center text-center">
-        <div className="max-w-xl space-y-6 select-none leading-relaxed p-8 rounded-2xl bg-[var(--bg-panel-inner)] border border-[var(--border-subtle)] shadow-inner transition-transform">
-          <div className="w-16 h-16 rounded-full bg-[#0077C5]/10 text-[#0077C5] border border-[#0077C5]/20 flex items-center justify-center text-3xl mx-auto animate-bounce">
-            
-          </div>
-          <div className="space-y-2">
-            <h1 className="text-xl md:text-2xl font-black text-[var(--text-core)] tracking-tight">
-              {t.welcomeTitle}
-            </h1>
-            <p className="text-[var(--text-sec)] text-xs md:text-sm font-medium leading-relaxed font-sans">
-              {t.welcomeDesc}
-            </p>
-          </div>
-          <div className="border-t border-[var(--border-subtle)] pt-4 flex flex-wrap gap-2 justify-center text-[10px] font-mono text-[var(--text-mute)]">
-            <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)]">User ID: {userEmail}</span>
-            <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)]">Locale: {selectedLanguage.code}-ET</span>
-            <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)] uppercase">Channel Status: Secure</span>
+      {/* MAIN CONTENT AREA */}
+      {activeTab === "Dashboard" ? (
+        <FinancialOverviewDashboard />
+      ) : (
+        <div className="flex-grow max-w-7xl mx-auto px-6 py-12 flex flex-col items-center justify-center text-center">
+          <div className="max-w-xl space-y-6 select-none leading-relaxed p-8 rounded-2xl bg-[var(--bg-panel-inner)] border border-[var(--border-subtle)] shadow-inner transition-transform">
+            <div className="w-16 h-16 rounded-full bg-[#0077C5]/10 text-[#0077C5] border border-[#0077C5]/20 flex items-center justify-center text-3xl mx-auto animate-bounce">
+              
+            </div>
+            <div className="space-y-2">
+              <h1 className="text-xl md:text-2xl font-black text-[var(--text-core)] tracking-tight">
+                {activeTab} - {t.welcomeTitle}
+              </h1>
+              <p className="text-[var(--text-sec)] text-xs md:text-sm font-medium leading-relaxed font-sans">
+                {t.welcomeDesc}
+              </p>
+            </div>
+            <div className="border-t border-[var(--border-subtle)] pt-4 flex flex-wrap gap-2 justify-center text-[10px] font-mono text-[var(--text-mute)]">
+              <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)]">User ID: {userEmail}</span>
+              <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)]">Locale: {selectedLanguage.code}-ET</span>
+              <span className="px-2 py-1 bg-[var(--bg-core)] rounded border border-[var(--border-subtle)] uppercase">Channel Status: Secure</span>
+            </div>
           </div>
         </div>
+      )}
       </div>
-      </div>
-      <MobileBottomNav />
+
+      <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
   );
 }
