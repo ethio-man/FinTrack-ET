@@ -28,7 +28,7 @@ export default function MultiRingDonut({ data, language }: MultiRingDonutProps) 
 
   return (
     <div
-      className="rounded-2xl p-6 flex flex-col shadow-sm border border-gray-100 dark:border-gray-800 transition-colors"
+      className="rounded-2xl p-6 flex flex-col shadow-sm border border-[var(--border-subtle)] transition-colors"
       style={{ background: 'linear-gradient(135deg, #1a2744 0%, #0f1b35 100%)' }}
     >
       {/* Header */}

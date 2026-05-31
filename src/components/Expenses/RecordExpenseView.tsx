@@ -89,7 +89,7 @@ export default function RecordExpenseView({ onBack, selectedLanguage }: { onBack
   const parsedAmount = parseFloat(form.amount) || 0;
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-6 w-full h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
         <button onClick={onBack} className="p-2 hover:bg-[var(--bg-panel)] rounded-lg transition-colors">
@@ -108,7 +108,7 @@ export default function RecordExpenseView({ onBack, selectedLanguage }: { onBack
         </div>
       )}
 
-      <div className="bg-[var(--bg-panel-inner)] rounded-xl shadow-sm border border-[var(--border-subtle)] p-6 space-y-6">
+      <div className="bg-[var(--bg-panel-inner)] flex-1 rounded-xl shadow-sm border border-[var(--border-subtle)] p-6 space-y-6">
 
         {/* Category picker */}
         <div>
