@@ -197,6 +197,10 @@ export default function FinancialOverviewDashboard({ selectedLanguage }: { selec
     recExpense: isAmharic ? 'ወጪ መዝግብ' : 'Record Expense',
     addDebt: isAmharic ? 'እዳ ጨምር' : 'Add Debt',
     viewReports: isAmharic ? 'ሪፖርቶችን እይ' : 'View Reports',
+    last7: isAmharic ? 'ባለፈው 7 ቀናት' : 'Last 7 days',
+    last30: isAmharic ? 'ባለፈው 30 ቀናት' : 'Last 30 days',
+    chartRevenue: isAmharic ? 'ገቢ' : 'Revenue',
+    chartProfit: isAmharic ? 'ትርፉ' : 'Profit',
   };
 
   const [timeFilter, setTimeFilter] = useState('7days');
@@ -281,8 +285,8 @@ export default function FinancialOverviewDashboard({ selectedLanguage }: { selec
                   itemStyle={{ fontWeight: 'bold' }}
                 />
                 <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
-                <Area type="monotone" dataKey="revenue" stroke="#a5b4fc" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" name="Revenue" />
-                <Area type="monotone" dataKey="profit" stroke="#0077C5" strokeWidth={3} fillOpacity={1} fill="url(#colorProfit)" name="Profit" />
+                <Area type="monotone" dataKey="revenue" stroke="#a5b4fc" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" name={t.chartRevenue} />
+                <Area type="monotone" dataKey="profit" stroke="#0077C5" strokeWidth={3} fillOpacity={1} fill="url(#colorProfit)" name={t.chartProfit} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -292,8 +296,8 @@ export default function FinancialOverviewDashboard({ selectedLanguage }: { selec
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-[var(--text-core)]">{t.expenseBreakdown}</h2>
               <select className="text-xs bg-[var(--bg-panel-inner)] border border-[var(--border-core)] text-[var(--text-core)] rounded-lg px-2 py-1.5 outline-none cursor-pointer">
-                <option>Last 30 days</option>
-                <option>Last 7 days</option>
+              <option>{t.last30}</option>
+                <option>{t.last7}</option>
               </select>
             </div>
             <ResponsiveContainer width="100%" height={200}>

@@ -235,7 +235,9 @@ function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale:
     next: isAmharic ? 'ቀጣይ' : 'Next',
     cash: isAmharic ? 'ጥሬ ገንዘብ' : 'Cash',
     telebirr: isAmharic ? 'ቴሌብር' : 'Telebirr',
-
+    chartRevenue: isAmharic ? 'ገቢ' : 'Revenue',
+    chartTx: isAmharic ? 'ግቢይቶች' : 'Transactions',
+    chartRefunds: isAmharic ? 'ተመላሾች' : 'Refunds',
   };
   const transactionsChange = ((transactions - transactionsLastPeriod) / transactionsLastPeriod) * 100;
 
@@ -255,12 +257,12 @@ function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale:
       <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)] mb-6">
         <div className="flex items-center gap-4 mb-6">
           <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg">{t.all}</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.revenue}</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.transactions}</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.refunds}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.chartRevenue}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.chartTx}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.chartRefunds}</button>
           <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.comparedTo}</button>
           <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg flex items-center gap-1">
-            Previous month <ChevronDown className="w-4 h-4" />
+            {t.prevMonth} <ChevronDown className="w-4 h-4" />
           </button>
         </div>
 
@@ -340,6 +342,7 @@ function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale:
                 strokeWidth={2}
                 dot={{ fill: '#a855f7', r: 3 }}
                 activeDot={{ r: 5 }}
+                name={t.chartRevenue}
               />
               <Line
                 key="line-transactions"
@@ -349,6 +352,7 @@ function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale:
                 strokeWidth={2}
                 dot={{ fill: '#3b82f6', r: 3 }}
                 activeDot={{ r: 5 }}
+                name={t.chartTx}
               />
               <Line
                 key="line-refunds"
@@ -358,6 +362,7 @@ function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale:
                 strokeWidth={2}
                 dot={{ fill: '#f97316', r: 3 }}
                 activeDot={{ r: 5 }}
+                name={t.chartRefunds}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -656,6 +661,14 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
     addNotesPh: isAmharic ? 'ማንኛውም ተጨማሪ ማስታወሻዎች ወይም መመሪያዎች...' : 'Any additional notes or instructions...',
     cancel: isAmharic ? 'ሰርዝ' : 'Cancel',
     completeSale: isAmharic ? 'ሽያጩን አጠናቅ' : 'Complete Sale',
+    selectExistingCustomer: isAmharic ? 'ነባር ደንበኛ ይምረጡ' : 'Select existing customer',
+    orTypeNewCustomer: isAmharic ? 'ወይም አዲስ የደንበኛ ስም ይተይቡ' : 'Or type new customer name',
+    summary: isAmharic ? 'ማጠቃለያ' : 'Summary',
+    savePrintReceipt: isAmharic ? 'አስቀምጥ እና ደረሰኝ አትም' : 'Save & Print Receipt',
+    saveSendSms: isAmharic ? 'አስቀምጥ እና ኤስኤምኤስ ላክ' : 'Save & Send SMS',
+    saveDraft: isAmharic ? 'እንደ ረቂቅ አስቀምጥ' : 'Save Draft',
+    tipText: isAmharic ? 'በመፈለግ ወይም ባርኮዶችን በመቃኘት ምርቶችን ማከል ይችላሉ። ቀኑ ወደ አሁን ነባሪ ይሆናል ነገር ግን ላለፉት ሽያጮች ሊለወጥ ይችላል።' : 'You can add products by searching or scanning barcodes. The date defaults to now but can be changed for past sales.',
+    tipLabel: isAmharic ? 'ጠቃሚ ምክር:' : 'Tip:',
   };
   const finalAmount = subtotal - discount;
 
@@ -695,7 +708,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
                     value={selectedCustomer}
                     onChange={(e) => setSelectedCustomer(e.target.value)}
                   >
-                    <option value="">Select existing customer</option>
+                    <option value="">{t.selectExistingCustomer}</option>
                     {mockCustomers.map(customer => (
                       <option key={customer} value={customer}>{customer}</option>
                     ))}
@@ -703,7 +716,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
                 </div>
                 <input
                   type="text"
-                  placeholder="Or type new customer name"
+                  placeholder={t.orTypeNewCustomer}
                   className="w-full mt-2 px-3 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={newCustomerName}
                   onChange={(e) => setNewCustomerName(e.target.value)}
@@ -876,11 +889,11 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
         <div className="space-y-6">
           {/* Totals Panel */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)] sticky top-6">
-            <h3 className="mb-4">Summary</h3>
+            <h3 className="mb-4">{t.summary}</h3>
 
             <div className="space-y-3 mb-4 pb-4 border-b border-[var(--border-core)]">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-[var(--text-sec)]">Subtotal</span>
+                <span className="text-[var(--text-sec)]">{t.subtotal}</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
@@ -905,14 +918,14 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
             <div className="space-y-3">
               <button className="w-full px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2">
                 <Printer className="w-4 h-4" />
-                Save & Print Receipt
+                {t.savePrintReceipt}
               </button>
               <button className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center justify-center gap-2">
                 <Send className="w-4 h-4" />
-                Save & Send SMS
+                {t.saveSendSms}
               </button>
               <button className="w-full px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
-                Save Draft
+                {t.saveDraft}
               </button>
               <button
                 onClick={onBack}
@@ -924,7 +937,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
           {/* Info Card */}
           <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
             <p className="text-sm text-blue-900">
-              <span className="font-medium">Tip:</span> You can add products by searching or scanning barcodes. The date defaults to now but can be changed for past sales.
+              <span className="font-medium">{t.tipLabel}</span> {t.tipText}
             </p>
           </div>
         </div>
@@ -963,6 +976,10 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
     goBack: isAmharic ? 'ወደ ኋላ ሂድ' : 'Go back',
     customerStatus: isAmharic ? 'የደንበኛ ሁኔታ' : 'Customer Status',
     noDebts: isAmharic ? 'ምንም ቀሪ ዕዳ የለም' : 'No outstanding debts',
+    saleTitle: isAmharic ? 'ሽያጭ' : 'Sale',
+    invoiceNumber: isAmharic ? 'የደረሰኝ ቁጥር' : 'Invoice Number',
+    dateLabel: isAmharic ? 'ቀን' : 'Date',
+    deleteBtn: isAmharic ? 'ሰርዝ' : 'Delete',
   };
   const sale = mockSales.find(s => s.id === saleId);
 
@@ -987,7 +1004,7 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl">Sale {sale.id}</h1>
+            <h1 className="text-2xl">{t.saleTitle} {sale.id}</h1>
             <p className="text-[var(--text-sec)] text-sm">{sale.date} at {sale.time}</p>
           </div>
         </div>
@@ -1009,7 +1026,7 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
           </button>
           <button className="px-4 py-2 bg-red-100 text-red-700 rounded-lg flex items-center gap-2 hover:bg-red-200">
             <Trash2 className="w-4 h-4" />
-            Delete
+            {t.deleteBtn}
           </button>
         </div>
       </div>
@@ -1022,8 +1039,8 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
             <div className="flex items-start justify-between mb-8">
               <div>
                 <h2 className="text-xl mb-1">{t.invoice.toUpperCase()}</h2>
-                <p className="text-sm text-[var(--text-sec)]">Invoice Number: {sale.id}</p>
-                <p className="text-sm text-[var(--text-sec)]">Date: {sale.date}</p>
+                <p className="text-sm text-[var(--text-sec)]">{t.invoiceNumber}: {sale.id}</p>
+                <p className="text-sm text-[var(--text-sec)]">{t.dateLabel}: {sale.date}</p>
               </div>
               <div className="w-16 h-16 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8 text-white" />
