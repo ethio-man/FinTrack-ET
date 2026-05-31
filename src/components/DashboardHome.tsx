@@ -7,6 +7,7 @@ import DashboardHeader from "./Dashboard/DashboardHeader";
 import MobileSearchOverlay from "./Dashboard/MobileSearchOverlay";
 import PlaceholderContent from "./Dashboard/PlaceholderContent";
 import SalesPage from "./SalesPage";
+import ExpensesPage from "./Expenses/ExpensesPage";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -80,6 +81,8 @@ export default function DashboardHome({
           <FinancialOverviewDashboard selectedLanguage={selectedLanguage} />
         ) : activeTab === "Sales" ? (
           <SalesPage selectedLanguage={selectedLanguage} />
+        ) : activeTab === "Expenses" ? (
+          <ExpensesPage language={selectedLanguage} />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}
