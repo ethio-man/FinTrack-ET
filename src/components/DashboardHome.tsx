@@ -6,6 +6,7 @@ import FinancialOverviewDashboard from "./FinancialOverviewDashboard";
 import DashboardHeader from "./Dashboard/DashboardHeader";
 import MobileSearchOverlay from "./Dashboard/MobileSearchOverlay";
 import PlaceholderContent from "./Dashboard/PlaceholderContent";
+import SalesPage from "./SalesPage";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -77,6 +78,8 @@ export default function DashboardHome({
         {/* MAIN CONTENT AREA */}
         {activeTab === "Dashboard" ? (
           <FinancialOverviewDashboard />
+        ) : activeTab === "Sales" ? (
+          <SalesPage />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}
