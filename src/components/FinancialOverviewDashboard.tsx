@@ -1,3 +1,4 @@
+import { LanguageOpt } from '../types';
 import React, { useState } from 'react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { TrendingUp, TrendingDown, DollarSign, Wallet, CreditCard, ShoppingCart, AlertTriangle, Bell, Plus, FileText, ArrowUpRight, ArrowDownRight, MoreVertical } from 'lucide-react';
@@ -55,7 +56,7 @@ const expenseBreakdown = [
 ];
 
 // Components
-const KPICard = ({ title, value, change, isPositive, icon: Icon, color }: any) => {
+const KPICard = ({ title, value, change, isPositive, icon: Icon, color, vsLabel }: any) => {
   return (
     <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)] hover:border-[#0077C5]/30 transition-all">
       <div className="flex items-start justify-between">
@@ -65,7 +66,7 @@ const KPICard = ({ title, value, change, isPositive, icon: Icon, color }: any) =
           <div className={`flex items-center gap-1 text-sm font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
             {isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
             <span>{isPositive ? '+' : '-'}{Math.abs(change)}%</span>
-            <span className="text-[var(--text-mute)] font-medium ml-1">vs yesterday</span>
+            <span className="text-[var(--text-mute)] font-medium ml-1">{vsLabel || 'vs yesterday'}</span>
           </div>
         </div>
         <div className={`p-3 rounded-lg ${color}`}>
@@ -170,7 +171,34 @@ const QuickActionButton = ({ icon: Icon, label, color }: any) => {
   );
 };
 
-export default function FinancialOverviewDashboard() {
+export default function FinancialOverviewDashboard({ selectedLanguage }: { selectedLanguage?: LanguageOpt }) {
+  const isAmharic = selectedLanguage?.code === 'am';
+  const t = {
+    greeting: isAmharic ? 'ሰላም ማሪያና - ዛሬ በሱቅዎ ውስጥ የሆነው ይሄ ነው' : 'Hey Mariana - here\'s what\'s happening with your store today',
+    overview: isAmharic ? 'የፋይናንስ አጠቃላይ እይታ' : 'Financial Overview Dashboard',
+    sales: isAmharic ? 'የዛሬ ሽያጭ' : 'TODAY\'S SALES',
+    profit: isAmharic ? 'ትርፍ' : 'PROFIT',
+    expenses: isAmharic ? 'ወጪዎች' : 'EXPENSES',
+    balance: isAmharic ? 'ጥሬ ገንዘብ ቀሪ' : 'CASH BALANCE',
+    weeklyReport: isAmharic ? 'ሳምንታዊ የትርፍ ሪፖርት' : 'Weekly Profit Report',
+    days7: isAmharic ? '7 ቀናት' : '7 Days',
+    days30: isAmharic ? '30 ቀናት' : '30 Days',
+    expenseBreakdown: isAmharic ? 'የወጪ ዝርዝር' : 'Expense Breakdown',
+    recentTx: isAmharic ? 'የቅርብ ጊዜ ግብይቶች' : 'Recent Transactions',
+    seeAll: isAmharic ? 'ሁሉንም አሳይ' : 'SEE ALL',
+    topDebtors: isAmharic ? 'ዋና ባለዕዳዎች' : 'Top Debtors',
+    lowStock: isAmharic ? 'አነስተኛ ክምችት ማስጠንቀቂያ' : 'Low Stock Alerts',
+    items: isAmharic ? 'ዕቃዎች' : 'ITEMS',
+    reminders: isAmharic ? 'የዛሬ ማስታወሻዎች' : 'Reminders Due Today',
+    pending: isAmharic ? 'የሚጠበቁ' : 'PENDING',
+    quickActions: isAmharic ? 'ፈጣን እርምጃዎች' : 'Quick Actions',
+    vsYday: isAmharic ? 'ከትናንት ጋር ሲነፃፀር' : 'vs yesterday',
+    quickSale: isAmharic ? 'ፈጣን ሽያጭ' : 'Quick Sale',
+    recExpense: isAmharic ? 'ወጪ መዝግብ' : 'Record Expense',
+    addDebt: isAmharic ? 'እዳ ጨምር' : 'Add Debt',
+    viewReports: isAmharic ? 'ሪፖርቶችን እይ' : 'View Reports',
+  };
+
   const [timeFilter, setTimeFilter] = useState('7days');
 
   return (
@@ -178,43 +206,47 @@ export default function FinancialOverviewDashboard() {
       <div className="max-w-[1600px] mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-black tracking-tight text-[var(--text-core)] mb-1">Hey Mariana - here's what's happening with your store today</h1>
-          <p className="text-[var(--text-sec)] text-sm font-medium">Financial Overview Dashboard</p>
+          <h1 className="text-2xl font-black tracking-tight text-[var(--text-core)] mb-1">{t.greeting}</h1>
+          <p className="text-[var(--text-sec)] text-sm font-medium">{t.overview}</p>
         </div>
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <KPICard
-            title="TODAY'S SALES"
+            title={t.sales}
             value={kpiData.todaysSales.value}
             change={kpiData.todaysSales.change}
             isPositive={kpiData.todaysSales.isPositive}
             icon={ShoppingCart}
             color="bg-indigo-600"
+            vsLabel={t.vsYday}
           />
           <KPICard
-            title="PROFIT"
+            title={t.profit}
             value={kpiData.profit.value}
             change={kpiData.profit.change}
             isPositive={kpiData.profit.isPositive}
             icon={TrendingUp}
             color="bg-green-600"
+            vsLabel={t.vsYday}
           />
           <KPICard
-            title="EXPENSES"
+            title={t.expenses}
             value={kpiData.expenses.value}
             change={kpiData.expenses.change}
             isPositive={kpiData.expenses.isPositive}
             icon={CreditCard}
             color="bg-orange-600"
+            vsLabel={t.vsYday}
           />
           <KPICard
-            title="CASH BALANCE"
+            title={t.balance}
             value={kpiData.cashBalance.value}
             change={kpiData.cashBalance.change}
             isPositive={kpiData.cashBalance.isPositive}
             icon={Wallet}
             color="bg-blue-600"
+            vsLabel={t.vsYday}
           />
         </div>
 
@@ -223,10 +255,10 @@ export default function FinancialOverviewDashboard() {
           {/* Weekly Profit Chart - Spans 2 columns */}
           <div className="lg:col-span-2 bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Weekly Profit Report</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.weeklyReport}</h2>
               <div className="flex gap-2 bg-[var(--bg-panel-inner)] p-1 rounded-lg border border-[var(--border-subtle)]">
-                <button className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors cursor-pointer ${timeFilter === '7days' ? 'bg-[#0077C5] text-white shadow-sm' : 'text-[var(--text-sec)] hover:text-[var(--text-core)]'}`} onClick={() => setTimeFilter('7days')}>7 Days</button>
-                <button className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors cursor-pointer ${timeFilter === '30days' ? 'bg-[#0077C5] text-white shadow-sm' : 'text-[var(--text-sec)] hover:text-[var(--text-core)]'}`} onClick={() => setTimeFilter('30days')}>30 Days</button>
+                <button className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors cursor-pointer ${timeFilter === '7days' ? 'bg-[#0077C5] text-white shadow-sm' : 'text-[var(--text-sec)] hover:text-[var(--text-core)]'}`} onClick={() => setTimeFilter('7days')}>{t.days7}</button>
+                <button className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors cursor-pointer ${timeFilter === '30days' ? 'bg-[#0077C5] text-white shadow-sm' : 'text-[var(--text-sec)] hover:text-[var(--text-core)]'}`} onClick={() => setTimeFilter('30days')}>{t.days30}</button>
               </div>
             </div>
             <ResponsiveContainer width="100%" height={300}>
@@ -258,7 +290,7 @@ export default function FinancialOverviewDashboard() {
           {/* Expense Breakdown */}
           <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Expense Breakdown</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.expenseBreakdown}</h2>
               <select className="text-xs bg-[var(--bg-panel-inner)] border border-[var(--border-core)] text-[var(--text-core)] rounded-lg px-2 py-1.5 outline-none cursor-pointer">
                 <option>Last 30 days</option>
                 <option>Last 7 days</option>
@@ -304,7 +336,7 @@ export default function FinancialOverviewDashboard() {
           {/* Recent Transactions */}
           <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-6 border-b border-[var(--border-subtle)] pb-4">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Recent Transactions</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.recentTx}</h2>
               <button className="text-xs font-black tracking-wider text-[#0077C5] hover:text-[#005a96] flex items-center gap-1 cursor-pointer transition-colors">
                 SEE ALL
                 <ArrowUpRight className="w-3 h-3" />
@@ -320,7 +352,7 @@ export default function FinancialOverviewDashboard() {
           {/* Top Debtors */}
           <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-6 border-b border-[var(--border-subtle)] pb-4">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Top Debtors</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.topDebtors}</h2>
               <button className="text-[var(--text-mute)] hover:text-[var(--text-core)] cursor-pointer transition-colors">
                 <MoreVertical className="w-5 h-5" />
               </button>
@@ -338,7 +370,7 @@ export default function FinancialOverviewDashboard() {
           {/* Low Stock Alerts */}
           <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-6 border-b border-[var(--border-subtle)] pb-4">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Low Stock Alerts</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.lowStock}</h2>
               <span className="text-[10px] font-black bg-red-500/10 text-red-500 px-2 py-1 rounded border border-red-500/20">{lowStockAlerts.length} ITEMS</span>
             </div>
             <div>
@@ -351,7 +383,7 @@ export default function FinancialOverviewDashboard() {
           {/* Reminders Due Today */}
           <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
             <div className="flex items-center justify-between mb-6 border-b border-[var(--border-subtle)] pb-4">
-              <h2 className="text-lg font-bold text-[var(--text-core)]">Reminders Due Today</h2>
+              <h2 className="text-lg font-bold text-[var(--text-core)]">{t.reminders}</h2>
               <span className="text-[10px] font-black bg-blue-500/10 text-blue-500 px-2 py-1 rounded border border-blue-500/20">{remindersToday.length} PENDING</span>
             </div>
             <div>
@@ -364,12 +396,12 @@ export default function FinancialOverviewDashboard() {
 
         {/* Quick Actions */}
         <div className="bg-[var(--bg-panel)] rounded-xl p-6 shadow-sm border border-[var(--border-core)]">
-          <h2 className="text-lg font-bold text-[var(--text-core)] mb-4">Quick Actions</h2>
+          <h2 className="text-lg font-bold text-[var(--text-core)] mb-4">{t.quickActions}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <QuickActionButton icon={Plus} label="Quick Sale" color="bg-indigo-600" />
-            <QuickActionButton icon={CreditCard} label="Record Expense" color="bg-orange-600" />
-            <QuickActionButton icon={DollarSign} label="Add Debt" color="bg-green-600" />
-            <QuickActionButton icon={FileText} label="View Reports" color="bg-[#0077C5]" />
+            <QuickActionButton icon={Plus} label={t.quickSale} color="bg-indigo-600" />
+            <QuickActionButton icon={CreditCard} label={t.recExpense} color="bg-orange-600" />
+            <QuickActionButton icon={DollarSign} label={t.addDebt} color="bg-green-600" />
+            <QuickActionButton icon={FileText} label={t.viewReports} color="bg-[#0077C5]" />
           </div>
         </div>
       </div>

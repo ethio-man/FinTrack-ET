@@ -77,9 +77,9 @@ export default function DashboardHome({
 
         {/* MAIN CONTENT AREA */}
         {activeTab === "Dashboard" ? (
-          <FinancialOverviewDashboard />
+          <FinancialOverviewDashboard selectedLanguage={selectedLanguage} />
         ) : activeTab === "Sales" ? (
-          <SalesPage />
+          <SalesPage selectedLanguage={selectedLanguage} />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}

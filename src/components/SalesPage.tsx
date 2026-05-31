@@ -1,3 +1,4 @@
+import { LanguageOpt } from '../types';
 import React, { useState } from 'react';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip } from 'recharts';
 import { Search, Filter, Download, FileText, Plus, X, Calendar, User, ShoppingBag, CreditCard, Smartphone, Building2, Wallet, Trash2, Edit2, Send, Printer, ArrowLeft, MoreVertical, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
@@ -150,7 +151,7 @@ const periodComparisonData = [
 ];
 
 // Main Sales Component
-export default function Sales() {
+export default function Sales({ selectedLanguage }: { selectedLanguage?: LanguageOpt }) {
   const [currentView, setCurrentView] = useState<'list' | 'new' | 'detail'>('list');
   const [selectedSaleId, setSelectedSaleId] = useState<string | null>(null);
 
@@ -170,17 +171,17 @@ export default function Sales() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-core)]">
-      {currentView === 'list' && <SalesListView onNewSale={handleNewSale} onViewSale={handleViewSale} />}
-      {currentView === 'new' && <NewSaleView onBack={handleBackToList} />}
+      {currentView === 'list' && <SalesListView onNewSale={handleNewSale} onViewSale={handleViewSale}  selectedLanguage={selectedLanguage} />}
+      {currentView === 'new' && <NewSaleView onBack={handleBackToList}  selectedLanguage={selectedLanguage} />}
       {currentView === 'detail' && selectedSaleId && (
-        <SaleDetailView saleId={selectedSaleId} onBack={handleBackToList} onEdit={() => setCurrentView('new')} />
+        <SaleDetailView saleId={selectedSaleId} onBack={handleBackToList} onEdit={() => setCurrentView('new')} selectedLanguage={selectedLanguage} />
       )}
     </div>
   );
 }
 
 // Sales List View
-function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onViewSale: (id: string) => void }) {
+function SalesListView({ onNewSale, onViewSale, selectedLanguage }: { onNewSale: () => void; onViewSale: (id: string) => void; selectedLanguage?: LanguageOpt }) {
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('date');
@@ -198,6 +199,44 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
 
   const transactions = mockSales.length;
   const transactionsLastPeriod = 1520;
+  const isAmharic = selectedLanguage?.code === 'am';
+  const t = {
+    title: isAmharic ? 'ሽያጭ' : 'Sales',
+    desc: isAmharic ? 'ሁሉንም የሽያጭ ግብይቶች ያስተዳድሩ እና ይከታተሉ' : 'Manage and track all sales transactions',
+    all: isAmharic ? 'ሁሉም' : 'All',
+    revenue: isAmharic ? 'ገቢ' : 'Revenue',
+    transactions: isAmharic ? 'ግብይቶች' : 'Transactions',
+    refunds: isAmharic ? 'ተመላሾች' : 'Refunds',
+    comparedTo: isAmharic ? 'ከዚህ ጋር ሲነፃፀር' : 'Compared to',
+    prevMonth: isAmharic ? 'ያለፈው ወር' : 'Previous month',
+    vsLastPeriod: isAmharic ? 'ካለፈው ጊዜ ጋር ሲነፃፀር' : 'vs last period',
+    searchPh: isAmharic ? 'በደንበኛ፣ በመታወቂያ ወይም በምርት ይፈልጉ...' : 'Search sales by customer, ID, or product...',
+    filter: isAmharic ? 'አጣራ' : 'Filter',
+    exportCsv: isAmharic ? 'CSV ላክ' : 'Export CSV',
+    exportPdf: isAmharic ? 'PDF ላክ' : 'Export PDF',
+    recordSale: isAmharic ? 'ሽያጭ መዝግብ' : 'Record Sale',
+    dateRange: isAmharic ? 'የቀን ክልል' : 'Date Range',
+    paymentMethod: isAmharic ? 'የክፍያ ዘዴ' : 'Payment Method',
+    status: isAmharic ? 'ሁኔታ' : 'Status',
+    minAmount: isAmharic ? 'አነስተኛ መጠን' : 'Min Amount',
+    maxAmount: isAmharic ? 'ከፍተኛ መጠን' : 'Max Amount',
+    id: isAmharic ? 'መታወቂያ' : 'ID',
+    customer: isAmharic ? 'ደንበኛ' : 'Customer',
+    date: isAmharic ? 'ቀን' : 'Date',
+    items: isAmharic ? 'ዕቃዎች' : 'Items',
+    total: isAmharic ? 'ጠቅላላ' : 'Total',
+    payment: isAmharic ? 'ክፍያ' : 'Payment',
+    view: isAmharic ? 'እይ' : 'View',
+    showing: isAmharic ? 'እያሳየ ያለው' : 'Showing',
+    to: isAmharic ? 'እስከ' : 'to',
+    of: isAmharic ? 'ከ' : 'of',
+    sales: isAmharic ? 'ሽያጮች' : 'sales',
+    previous: isAmharic ? 'የቀድሞው' : 'Previous',
+    next: isAmharic ? 'ቀጣይ' : 'Next',
+    cash: isAmharic ? 'ጥሬ ገንዘብ' : 'Cash',
+    telebirr: isAmharic ? 'ቴሌብር' : 'Telebirr',
+
+  };
   const transactionsChange = ((transactions - transactionsLastPeriod) / transactionsLastPeriod) * 100;
 
   const refunds = 3260;
@@ -208,18 +247,18 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
     <div className="p-6 max-w-[1600px] mx-auto">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl mb-1">Sales</h1>
-        <p className="text-[var(--text-sec)] text-sm">Manage and track all sales transactions</p>
+        <h1 className="text-2xl mb-1">{t.title}</h1>
+        <p className="text-[var(--text-sec)] text-sm">{t.desc}</p>
       </div>
 
       {/* Summary Strip */}
       <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)] mb-6">
         <div className="flex items-center gap-4 mb-6">
-          <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg">All</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Revenue</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Transactions</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Refunds</button>
-          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Compared to</button>
+          <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg">{t.all}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.revenue}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.transactions}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.refunds}</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">{t.comparedTo}</button>
           <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg flex items-center gap-1">
             Previous month <ChevronDown className="w-4 h-4" />
           </button>
@@ -229,7 +268,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-              <span className="text-sm text-[var(--text-sec)]">Revenue</span>
+              <span className="text-sm text-[var(--text-sec)]">{t.revenue}</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${thisPeriodTotal.toLocaleString()}</h3>
@@ -238,13 +277,13 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 +{percentChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">{t.vsLastPeriod}</p>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-              <span className="text-sm text-[var(--text-sec)]">Transactions</span>
+              <span className="text-sm text-[var(--text-sec)]">{t.transactions}</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${18420}</h3>
@@ -253,13 +292,13 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 +{transactionsChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">{t.vsLastPeriod}</p>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-              <span className="text-sm text-[var(--text-sec)]">Refunds</span>
+              <span className="text-sm text-[var(--text-sec)]">{t.refunds}</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${refunds.toLocaleString()}</h3>
@@ -268,7 +307,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 {refundsChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">{t.vsLastPeriod}</p>
           </div>
         </div>
 
@@ -332,7 +371,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
             <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
             <input
               type="text"
-              placeholder="Search sales by customer, ID, or product..."
+              placeholder={t.searchPh}
               className="w-full pl-10 pr-4 py-2 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -344,31 +383,23 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
             }`}
             onClick={() => setShowFilters(!showFilters)}
           >
-            <Filter className="w-4 h-4" />
-            Filter
-          </button>
+            <Filter className="w-4 h-4" />{t.filter}</button>
           <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
-            <Download className="w-4 h-4" />
-            Export CSV
-          </button>
+            <Download className="w-4 h-4" />{t.exportCsv}</button>
           <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
-            <FileText className="w-4 h-4" />
-            Export PDF
-          </button>
+            <FileText className="w-4 h-4" />{t.exportPdf}</button>
           <button
             className="px-4 py-2 bg-indigo-600 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-700"
             onClick={onNewSale}
           >
-            <Plus className="w-4 h-4" />
-            Record Sale
-          </button>
+            <Plus className="w-4 h-4" />{t.recordSale}</button>
         </div>
 
         {/* Filter Panel */}
         {showFilters && (
           <div className="mt-4 pt-4 border-t border-[var(--border-core)] grid grid-cols-5 gap-4">
             <div>
-              <label className="block text-sm text-[var(--text-sec)] mb-2">Date Range</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">{t.dateRange}</label>
               <select
                 className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.dateRange}
@@ -382,21 +413,21 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               </select>
             </div>
             <div>
-              <label className="block text-sm text-[var(--text-sec)] mb-2">Payment Method</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">{t.paymentMethod}</label>
               <select
                 className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.paymentMethod}
                 onChange={(e) => setFilters({ ...filters, paymentMethod: e.target.value })}
               >
                 <option value="all">All Methods</option>
-                <option value="cash">Cash</option>
-                <option value="telebirr">Telebirr</option>
+                <option value="cash">{t.cash}</option>
+                <option value="telebirr">{t.telebirr}</option>
                 <option value="bank">Bank Transfer</option>
                 <option value="credit">Credit Card</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm text-[var(--text-sec)] mb-2">Status</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">{t.status}</label>
               <select
                 className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.status}
@@ -409,7 +440,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               </select>
             </div>
             <div>
-              <label className="block text-sm text-[var(--text-sec)] mb-2">Min Amount</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">{t.minAmount}</label>
               <input
                 type="number"
                 placeholder="$0"
@@ -419,7 +450,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               />
             </div>
             <div>
-              <label className="block text-sm text-[var(--text-sec)] mb-2">Max Amount</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">{t.maxAmount}</label>
               <input
                 type="number"
                 placeholder="$10000"
@@ -439,38 +470,31 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
             <thead className="bg-[var(--bg-core)] border-b border-[var(--border-subtle)]">
               <tr>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    ID <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.id}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Customer <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.customer}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Date <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.date}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Items <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.items}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Total <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.total}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Payment <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.payment}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
-                    Status <ChevronDown className="w-4 h-4" />
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">{t.status}<ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4"></th>
@@ -531,9 +555,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                       <button
                         onClick={() => onViewSale(sale.id)}
                         className="px-3 py-1.5 text-xs bg-indigo-50 text-indigo-600 rounded-md hover:bg-indigo-100"
-                      >
-                        View
-                      </button>
+                      >{t.view}</button>
                       <button
                         className="text-[var(--text-mute)] hover:text-[var(--text-sec)]"
                         onClick={(e) => e.stopPropagation()}
@@ -550,13 +572,13 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
 
         {/* Pagination */}
         <div className="px-6 py-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
-          <p className="text-sm text-[var(--text-sec)]">Showing 1 to {mockSales.length} of {mockSales.length} sales</p>
+          <p className="text-sm text-[var(--text-sec)]">{t.showing} 1 {t.to} {mockSales.length} {t.of} {mockSales.length} {t.sales}</p>
           <div className="flex gap-2">
-            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">Previous</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">{t.previous}</button>
             <button className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-sm">1</button>
             <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">2</button>
             <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">3</button>
-            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">Next</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">{t.next}</button>
           </div>
         </div>
       </div>
@@ -565,7 +587,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
 }
 
 // New Sale View
-function NewSaleView({ onBack }: { onBack: () => void }) {
+function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selectedLanguage?: LanguageOpt }) {
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [searchProduct, setSearchProduct] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState('');
@@ -609,6 +631,32 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
   };
 
   const subtotal = lineItems.reduce((sum, item) => sum + item.subtotal, 0);
+  const isAmharic = selectedLanguage?.code === 'am';
+  const t = {
+    create: isAmharic ? 'አዲስ ሽያጭ ፍጠር' : 'Create New Sale',
+    desc: isAmharic ? 'አዲስ የሽያጭ ግብይት ይመዝግቡ' : 'Record a new sales transaction',
+    saleDetails: isAmharic ? 'የሽያጭ ዝርዝሮች' : 'Sale Details',
+    customer: isAmharic ? 'ደንበኛ *' : 'Customer *',
+    dateTime: isAmharic ? 'ቀን እና ሰዓት' : 'Date & Time',
+    addProducts: isAmharic ? 'ምርቶችን ያክሉ' : 'Add Products',
+    searchProdPh: isAmharic ? 'ለማከል ምርቶችን ይፈልጉ...' : 'Search products to add...',
+    product: isAmharic ? 'ምርት' : 'Product',
+    qty: isAmharic ? 'ብዛት' : 'Qty',
+    unitPrice: isAmharic ? 'የአንዱ ዋጋ' : 'Unit Price',
+    subtotal: isAmharic ? 'ንዑስ ድምር' : 'Subtotal',
+    paymentMethod: isAmharic ? 'የክፍያ ዘዴ' : 'Payment Method',
+    cash: isAmharic ? 'ጥሬ ገንዘብ' : 'Cash',
+    telebirr: isAmharic ? 'ቴሌብር' : 'Telebirr',
+    bank: isAmharic ? 'ባንክ' : 'Bank',
+    credit: isAmharic ? 'ክሬዲት' : 'Credit',
+    orderSummary: isAmharic ? 'የትዕዛዝ ማጠቃለያ' : 'Order Summary',
+    discount: isAmharic ? 'ቅናሽ' : 'Discount',
+    total: isAmharic ? 'ጠቅላላ' : 'Total',
+    notes: isAmharic ? 'ማስታወሻዎች' : 'Notes',
+    addNotesPh: isAmharic ? 'ማንኛውም ተጨማሪ ማስታወሻዎች ወይም መመሪያዎች...' : 'Any additional notes or instructions...',
+    cancel: isAmharic ? 'ሰርዝ' : 'Cancel',
+    completeSale: isAmharic ? 'ሽያጩን አጠናቅ' : 'Complete Sale',
+  };
   const finalAmount = subtotal - discount;
 
   const filteredProducts = mockProducts.filter(p =>
@@ -626,8 +674,8 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
-          <h1 className="text-2xl">Create New Sale</h1>
-          <p className="text-[var(--text-sec)] text-sm">Record a new sales transaction</p>
+          <h1 className="text-2xl">{t.create}</h1>
+          <p className="text-[var(--text-sec)] text-sm">{t.desc}</p>
         </div>
       </div>
 
@@ -636,10 +684,10 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
         <div className="col-span-2 space-y-6">
           {/* Customer & Date */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-            <h3 className="mb-4">Sale Details</h3>
+            <h3 className="mb-4">{t.saleDetails}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-[var(--text-sec)] mb-2">Customer *</label>
+                <label className="block text-sm text-[var(--text-sec)] mb-2">{t.customer}</label>
                 <div className="relative">
                   <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
                   <select
@@ -662,7 +710,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 />
               </div>
               <div>
-                <label className="block text-sm text-[var(--text-sec)] mb-2">Date & Time</label>
+                <label className="block text-sm text-[var(--text-sec)] mb-2">{t.dateTime}</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative">
                     <Calendar className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
@@ -686,12 +734,12 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
 
           {/* Product Selector */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-            <h3 className="mb-4">Add Products</h3>
+            <h3 className="mb-4">{t.addProducts}</h3>
             <div className="relative mb-4">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
               <input
                 type="text"
-                placeholder="Search products to add..."
+                placeholder={t.searchProdPh}
                 className="w-full pl-10 pr-4 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
@@ -722,10 +770,10 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 <table className="w-full">
                   <thead className="bg-[var(--bg-core)] border-b border-[var(--border-core)]">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Product</th>
-                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Qty</th>
-                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Unit Price</th>
-                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Subtotal</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">{t.product}</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">{t.qty}</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">{t.unitPrice}</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">{t.subtotal}</th>
                       <th className="px-4 py-3"></th>
                     </tr>
                   </thead>
@@ -762,7 +810,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
 
           {/* Payment Method */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-            <h3 className="mb-4">Payment Method</h3>
+            <h3 className="mb-4">{t.paymentMethod}</h3>
             <div className="grid grid-cols-4 gap-3">
               <button
                 onClick={() => setPaymentMethod('cash')}
@@ -773,7 +821,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 }`}
               >
                 <Wallet className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'cash' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
-                <p className="text-sm text-center">Cash</p>
+                <p className="text-sm text-center">{t.cash}</p>
               </button>
               <button
                 onClick={() => setPaymentMethod('telebirr')}
@@ -784,7 +832,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 }`}
               >
                 <Smartphone className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'telebirr' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
-                <p className="text-sm text-center">Telebirr</p>
+                <p className="text-sm text-center">{t.telebirr}</p>
               </button>
               <button
                 onClick={() => setPaymentMethod('bank')}
@@ -795,7 +843,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 }`}
               >
                 <Building2 className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'bank' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
-                <p className="text-sm text-center">Bank</p>
+                <p className="text-sm text-center">{t.bank}</p>
               </button>
               <button
                 onClick={() => setPaymentMethod('credit')}
@@ -806,7 +854,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 }`}
               >
                 <CreditCard className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'credit' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
-                <p className="text-sm text-center">Credit</p>
+                <p className="text-sm text-center">{t.credit}</p>
               </button>
             </div>
           </div>
@@ -836,7 +884,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-[var(--text-sec)]">Discount</span>
+                <span className="text-[var(--text-sec)]">{t.discount}</span>
                 <input
                   type="number"
                   min="0"
@@ -850,7 +898,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
             </div>
 
             <div className="flex items-center justify-between mb-6">
-              <span className="text-lg">Total</span>
+              <span className="text-lg">{t.total}</span>
               <span className="text-2xl">${finalAmount.toFixed(2)}</span>
             </div>
 
@@ -869,9 +917,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
               <button
                 onClick={onBack}
                 className="w-full px-4 py-3 border border-[var(--border-subtle)] text-[var(--text-sec)] rounded-lg hover:bg-[var(--bg-core)]"
-              >
-                Cancel
-              </button>
+              >{t.cancel}</button>
             </div>
           </div>
 
@@ -888,14 +934,43 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
 }
 
 // Sale Detail View
-function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: () => void; onEdit: () => void }) {
+function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: string; onBack: () => void; onEdit: () => void; selectedLanguage?: LanguageOpt }) {
+  const isAmharic = selectedLanguage?.code === 'am';
+  const t = {
+    back: isAmharic ? 'ወደ ሽያጭ ዝርዝር ተመለስ' : 'Back to Sales List',
+    saleDetail: isAmharic ? 'የሽያጭ ዝርዝር' : 'Sale Detail',
+    edit: isAmharic ? 'አርም' : 'Edit',
+    sendReceipt: isAmharic ? 'ደረሰኝ ላክ' : 'Send Receipt',
+    print: isAmharic ? 'አትም' : 'Print',
+    invoice: isAmharic ? 'ደረሰኝ' : 'Invoice',
+    billTo: isAmharic ? 'ተቀባዩ' : 'BILL TO',
+    item: isAmharic ? 'ዕቃ' : 'ITEM',
+    qty: isAmharic ? 'ብዛት' : 'QTY',
+    unitPrice: isAmharic ? 'የአንዱ ዋጋ' : 'UNIT PRICE',
+    amount: isAmharic ? 'ድምር' : 'AMOUNT',
+    subtotal: isAmharic ? 'ንዑስ ድምር' : 'Subtotal',
+    discount: isAmharic ? 'ቅናሽ' : 'Discount',
+    total: isAmharic ? 'ጠቅላላ' : 'Total',
+    notes: isAmharic ? 'ማስታወሻዎች' : 'NOTES',
+    paymentInfo: isAmharic ? 'የክፍያ መረጃ' : 'Payment Information',
+    paymentMethod: isAmharic ? 'የክፍያ ዘዴ' : 'Payment Method',
+    amountPaid: isAmharic ? 'የተከፈለ መጠን' : 'Amount Paid',
+    balanceDue: isAmharic ? 'ቀሪ ሂሳብ' : 'Balance Due',
+    status: isAmharic ? 'ሁኔታ' : 'Status',
+    quickActions: isAmharic ? 'ፈጣን እርምጃዎች' : 'Quick Actions',
+    convertDebt: isAmharic ? 'ወደ እዳ ቀይር' : 'Convert to Debt',
+    notFound: isAmharic ? 'ሽያጩ አልተገኘም' : 'Sale not found',
+    goBack: isAmharic ? 'ወደ ኋላ ሂድ' : 'Go back',
+    customerStatus: isAmharic ? 'የደንበኛ ሁኔታ' : 'Customer Status',
+    noDebts: isAmharic ? 'ምንም ቀሪ ዕዳ የለም' : 'No outstanding debts',
+  };
   const sale = mockSales.find(s => s.id === saleId);
 
   if (!sale) {
     return (
       <div className="p-6">
-        <p>Sale not found</p>
-        <button onClick={onBack} className="text-indigo-600 hover:underline">Go back</button>
+        <p>{t.notFound}</p>
+        <button onClick={onBack} className="text-indigo-600 hover:underline">{t.goBack}</button>
       </div>
     );
   }
@@ -919,18 +994,18 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
         <div className="flex gap-2">
           <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Printer className="w-4 h-4" />
-            Print
+            {t.print}
           </button>
           <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Send className="w-4 h-4" />
-            Send SMS
+            {t.sendReceipt}
           </button>
           <button
             onClick={onEdit}
             className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]"
           >
             <Edit2 className="w-4 h-4" />
-            Edit
+            {t.edit}
           </button>
           <button className="px-4 py-2 bg-red-100 text-red-700 rounded-lg flex items-center gap-2 hover:bg-red-200">
             <Trash2 className="w-4 h-4" />
@@ -946,7 +1021,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-8 shadow-sm border border-[var(--border-subtle)]">
             <div className="flex items-start justify-between mb-8">
               <div>
-                <h2 className="text-xl mb-1">INVOICE</h2>
+                <h2 className="text-xl mb-1">{t.invoice.toUpperCase()}</h2>
                 <p className="text-sm text-[var(--text-sec)]">Invoice Number: {sale.id}</p>
                 <p className="text-sm text-[var(--text-sec)]">Date: {sale.date}</p>
               </div>
@@ -965,7 +1040,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
 
             {/* Customer Info */}
             <div className="mb-8">
-              <p className="text-xs text-[var(--text-sec)] mb-2">BILL TO</p>
+              <p className="text-xs text-[var(--text-sec)] mb-2">{t.billTo}</p>
               <p className="text-sm mb-1">{sale.customer}</p>
               {sale.customerPhone && <p className="text-xs text-[var(--text-sec)]">{sale.customerPhone}</p>}
             </div>
@@ -975,10 +1050,10 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
               <table className="w-full">
                 <thead className="border-b border-[var(--border-core)]">
                   <tr>
-                    <th className="text-left py-3 text-xs text-[var(--text-sec)]">ITEM</th>
-                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">QTY</th>
-                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">UNIT PRICE</th>
-                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">AMOUNT</th>
+                    <th className="text-left py-3 text-xs text-[var(--text-sec)]">{t.item}</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">{t.qty}</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">{t.unitPrice}</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">{t.amount}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -998,17 +1073,17 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
             <div className="flex justify-end">
               <div className="w-64 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-[var(--text-sec)]">Subtotal</span>
+                  <span className="text-[var(--text-sec)]">{t.subtotal}</span>
                   <span>${sale.subtotal.toFixed(2)}</span>
                 </div>
                 {sale.discount > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-[var(--text-sec)]">Discount</span>
+                    <span className="text-[var(--text-sec)]">{t.discount}</span>
                     <span className="text-red-600">-${sale.discount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between pt-2 border-t border-[var(--border-core)]">
-                  <span className="text-lg">Total</span>
+                  <span className="text-lg">{t.total}</span>
                   <span className="text-lg">${sale.total.toFixed(2)}</span>
                 </div>
               </div>
@@ -1017,7 +1092,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
             {/* Notes */}
             {sale.notes && (
               <div className="mt-8 pt-8 border-t border-[var(--border-core)]">
-                <p className="text-xs text-[var(--text-sec)] mb-2">NOTES</p>
+                <p className="text-xs text-[var(--text-sec)] mb-2">{t.notes}</p>
                 <p className="text-sm text-[var(--text-sec)]">{sale.notes}</p>
               </div>
             )}
@@ -1028,10 +1103,10 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
         <div className="space-y-6">
           {/* Payment Info */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-            <h3 className="mb-4">Payment Information</h3>
+            <h3 className="mb-4">{t.paymentInfo}</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-[var(--text-sec)] mb-1">Payment Method</p>
+                <p className="text-xs text-[var(--text-sec)] mb-1">{t.paymentMethod}</p>
                 <div className="flex items-center gap-2">
                   {sale.paymentMethod === 'cash' && <Wallet className="w-4 h-4 text-[var(--text-sec)]" />}
                   {sale.paymentMethod === 'telebirr' && <Smartphone className="w-4 h-4 text-[var(--text-sec)]" />}
@@ -1042,11 +1117,11 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
               </div>
               <div className="pt-3 border-t border-[var(--border-core)]">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-[var(--text-sec)]">Amount Paid</span>
+                  <span className="text-[var(--text-sec)]">{t.amountPaid}</span>
                   <span className="text-green-600">${sale.amountPaid.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[var(--text-sec)]">Balance Due</span>
+                  <span className="text-[var(--text-sec)]">{t.balanceDue}</span>
                   <span className={sale.balanceDue > 0 ? 'text-red-600' : 'text-[var(--text-core)]'}>
                     ${sale.balanceDue.toFixed(2)}
                   </span>
@@ -1057,7 +1132,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
 
           {/* Status */}
           <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-            <h3 className="mb-4">Status</h3>
+            <h3 className="mb-4">{t.status}</h3>
             <div>
               <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm capitalize ${
                 sale.status === 'complete' ? 'bg-green-100 text-green-700' :
@@ -1077,9 +1152,9 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
           {/* Actions */}
           {sale.status === 'complete' && sale.balanceDue > 0 && (
             <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
-              <h3 className="mb-4">Quick Actions</h3>
+              <h3 className="mb-4">{t.quickActions}</h3>
               <button className="w-full px-4 py-2.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
-                Convert to Debt
+                {t.convertDebt}
               </button>
             </div>
           )}
@@ -1087,7 +1162,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
           {/* Customer Debt Status */}
           <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
             <p className="text-sm text-amber-900">
-              <span className="font-medium">Customer Status:</span> No outstanding debts
+              <span className="font-medium">{t.customerStatus}:</span> {t.noDebts}
             </p>
           </div>
         </div>
