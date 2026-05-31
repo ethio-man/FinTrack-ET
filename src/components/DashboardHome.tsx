@@ -103,7 +103,7 @@ export default function DashboardHome({
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[var(--bg-core)] text-[var(--text-core)] transition-colors duration-300 font-sans" id="dashboard-main">
-      <Sidebar />
+      <Sidebar selectedLanguage={selectedLanguage} />
       <div className="flex-1 flex flex-col h-full relative overflow-y-auto pb-16 md:pb-0">
       
       {/* 
@@ -207,28 +207,6 @@ export default function DashboardHome({
           {/* RIGHT SIDE: Action Controls including language, interactive sync widget, notifications panel, help desk, profile avatar */}
           <div className="flex items-center gap-2.5">
             
-            {/* AMHARIC/ENGLISH SEARCH TRIGGER */}
-            <div className="relative">
-              <div
-                className="css-1j49n3m flex items-center justify-between gap-2.5 px-3 py-1.5 rounded-lg bg-[var(--bg-core)] border border-[var(--border-core)] hover:border-[#0077C5]/40 text-xs text-[var(--text-sec)] transition-all shadow-sm relative font-sans group max-w-[160px]"
-              >
-                <div className="flex items-center gap-1.5 text-[var(--text-sec)] transition-colors w-full">
-                  <svg className="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-lvel2e w-4 h-4 text-[#0077C5] hover:rotate-6 transition-transform flex-shrink-0" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14" fill="currentColor"></path>
-                  </svg>
-                  <input
-                    type="text"
-                    id="secondary-search-input"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={() => setSearchFocused(true)}
-                    placeholder={isAmharic ? "ፈለግ…" : "Search…"}
-                    className="w-full bg-transparent border-none outline-none text-[13px] font-semibold text-[var(--text-core)] placeholder:[var(--text-mute)]"
-                  />
-                </div>
-                <kbd aria-hidden="true" className="css-vrp3oc hidden md:inline-flex items-center px-1.5 py-0.5 text-[9px] font-mono bg-[var(--bg-panel-inner)] border border-[var(--border-subtle)] text-[var(--text-mute)] rounded uppercase transition-colors group-hover:text-[var(--text-core)]">Ctrl+K</kbd>
-              </div>
-            </div>
 
             {/* LANGUAGE TOGGLE CONTROL */}
             <div className="relative hidden md:block">

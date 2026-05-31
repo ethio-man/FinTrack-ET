@@ -16,8 +16,37 @@ import {
   HelpCircle
 } from 'lucide-react';
 
-export default function Sidebar() {
+import { LanguageOpt } from '../types';
+
+interface SidebarProps {
+  selectedLanguage: LanguageOpt;
+}
+
+export default function Sidebar({ selectedLanguage }: SidebarProps) {
   const [activeItem, setActiveItem] = useState('Dashboard');
+
+  const isAmharic = selectedLanguage.code === 'am';
+  const t = {
+    dashboard: isAmharic ? "ዳሽቦርድ" : "Dashboard",
+    transactions: isAmharic ? "ግብይቶች" : "Transactions",
+    sales: isAmharic ? "ሽያጭ" : "Sales",
+    expenses: isAmharic ? "ወጪዎች" : "Expenses",
+    debts: isAmharic ? "እዳዎች" : "Debts",
+    dueBadge: isAmharic ? "3 የሚጠበቁ" : "3 due",
+    business: isAmharic ? "ንግድ" : "Business",
+    inventory: isAmharic ? "ክምችት" : "Inventory",
+    lowBadge: isAmharic ? "2 ዝቅተኛ" : "2 low",
+    invoices: isAmharic ? "ደረሰኞች" : "Invoices",
+    reports: isAmharic ? "ሪፖርቶች" : "Reports",
+    premium: isAmharic ? "ፕሪሚየም" : "Premium",
+    analytics: isAmharic ? "ትንታኔ" : "Analytics",
+    trustScore: isAmharic ? "የታማኝነት ነጥብ" : "Trust Score",
+    team: isAmharic ? "ቡድን" : "Team",
+    pro: isAmharic ? "ፕሮ" : "Pro",
+    notifications: isAmharic ? "ማሳወቂያዎች" : "Notifications",
+    settings: isAmharic ? "ቅንብሮች" : "Settings",
+    help: isAmharic ? "እገዛ እና ድጋፍ" : "Help & Support",
+  };
 
   const navItemClass = (name: string) => `flex items-center gap-3 font-medium text-sm py-2 px-3 rounded-lg transition-colors cursor-pointer ${activeItem === name
       ? 'bg-[#0077C5]/10 text-[#0077C5]'
@@ -49,50 +78,50 @@ export default function Sidebar() {
           <nav className="flex flex-col space-y-1">
             <a onClick={() => setActiveItem('Dashboard')} className={navItemClass('Dashboard')}>
               <Home className="w-4.5 h-4.5" />
-              Dashboard
+              {t.dashboard}
             </a>
           </nav>
 
           {/* Transactions */}
           <div>
-            <p className="text-[10px] font-black text-[var(--text-mute)] uppercase tracking-widest mb-2 px-3">Transactions</p>
+            <p className="text-[10px] font-black text-[var(--text-mute)] uppercase tracking-widest mb-2 px-3">{t.transactions}</p>
             <nav className="flex flex-col space-y-1">
               <a onClick={() => setActiveItem('Sales')} className={navItemClass('Sales')}>
                 <TrendingUp className="w-4.5 h-4.5" />
-                Sales
+                {t.sales}
               </a>
               <a onClick={() => setActiveItem('Expenses')} className={navItemClass('Expenses')}>
                 <TrendingDown className="w-4.5 h-4.5" />
-                Expenses
+                {t.expenses}
               </a>
               <a onClick={() => setActiveItem('Debts')} className={`justify-between ${navItemClass('Debts')}`}>
                 <div className="flex items-center gap-3">
                   <CreditCard className="w-4.5 h-4.5" />
-                  <span>Debts</span>
+                  <span>{t.debts}</span>
                 </div>
-                <span className="text-[10px] font-bold text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded shadow-sm">3 due</span>
+                <span className="text-[10px] font-bold text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap">{t.dueBadge}</span>
               </a>
             </nav>
           </div>
 
           {/* Business */}
           <div>
-            <p className="text-[10px] font-black text-[var(--text-mute)] uppercase tracking-widest mb-2 px-3">Business</p>
+            <p className="text-[10px] font-black text-[var(--text-mute)] uppercase tracking-widest mb-2 px-3">{t.business}</p>
             <nav className="flex flex-col space-y-1">
               <a onClick={() => setActiveItem('Inventory')} className={`justify-between ${navItemClass('Inventory')}`}>
                 <div className="flex items-center gap-3">
                   <Package className="w-4.5 h-4.5" />
-                  <span>Inventory</span>
+                  <span>{t.inventory}</span>
                 </div>
-                <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded shadow-sm">2 low</span>
+                <span className="text-[10px] font-bold text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded shadow-sm whitespace-nowrap">{t.lowBadge}</span>
               </a>
               <a onClick={() => setActiveItem('Invoices')} className={navItemClass('Invoices')}>
                 <FileText className="w-4.5 h-4.5" />
-                Invoices
+                {t.invoices}
               </a>
               <a onClick={() => setActiveItem('Reports')} className={navItemClass('Reports')}>
                 <BarChart2 className="w-4.5 h-4.5" />
-                Reports
+                {t.reports}
               </a>
             </nav>
           </div>
@@ -100,24 +129,24 @@ export default function Sidebar() {
           {/* Premium */}
           <div>
             <p className="text-[10px] font-black text-[var(--text-mute)] uppercase tracking-widest mb-2 px-3 flex items-center gap-1.5">
-              Premium
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              {t.premium}
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
             </p>
             <nav className="flex flex-col space-y-1">
               <a onClick={() => setActiveItem('Analytics')} className={navItemClass('Analytics')}>
                 <PieChart className="w-4.5 h-4.5" />
-                Analytics
+                {t.analytics}
               </a>
               <a onClick={() => setActiveItem('Trust Score')} className={navItemClass('Trust Score')}>
                 <ShieldCheck className="w-4.5 h-4.5" />
-                Trust Score
+                {t.trustScore}
               </a>
               <a onClick={() => setActiveItem('Team')} className={`justify-between ${navItemClass('Team')}`}>
                 <div className="flex items-center gap-3">
                   <Users className="w-4.5 h-4.5" />
-                  <span>Team</span>
+                  <span>{t.team}</span>
                 </div>
-                <span className="text-[9px] font-black text-amber-600 bg-gradient-to-r from-amber-100 to-amber-50 border border-amber-200 px-1.5 py-0.5 rounded uppercase tracking-wider">Pro</span>
+                <span className="text-[9px] font-black text-amber-600 bg-gradient-to-r from-amber-100 to-amber-50 border border-amber-200 px-1.5 py-0.5 rounded uppercase tracking-wider">{t.pro}</span>
               </a>
             </nav>
           </div>
@@ -133,16 +162,16 @@ export default function Sidebar() {
                 <Bell className="w-4.5 h-4.5" />
                 <span className="absolute 0 right-0.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[var(--bg-panel)]"></span>
               </div>
-              <span>Notifications</span>
+              <span>{t.notifications}</span>
             </div>
           </a>
           <a onClick={() => setActiveItem('Settings')} className={navItemClass('Settings')}>
             <Settings className="w-4.5 h-4.5" />
-            Settings
+            {t.settings}
           </a>
           <a onClick={() => setActiveItem('Help')} className={navItemClass('Help')}>
             <HelpCircle className="w-4.5 h-4.5" />
-            Help & Support
+            {t.help}
           </a>
         </nav>
       </div>
