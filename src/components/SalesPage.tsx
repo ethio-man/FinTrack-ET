@@ -169,7 +169,7 @@ export default function Sales() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--bg-core)]">
       {currentView === 'list' && <SalesListView onNewSale={handleNewSale} onViewSale={handleViewSale} />}
       {currentView === 'new' && <NewSaleView onBack={handleBackToList} />}
       {currentView === 'detail' && selectedSaleId && (
@@ -209,18 +209,18 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl mb-1">Sales</h1>
-        <p className="text-gray-600 text-sm">Manage and track all sales transactions</p>
+        <p className="text-[var(--text-sec)] text-sm">Manage and track all sales transactions</p>
       </div>
 
       {/* Summary Strip */}
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-6">
+      <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)] mb-6">
         <div className="flex items-center gap-4 mb-6">
           <button className="px-3 py-1.5 text-sm bg-indigo-600 text-white rounded-lg">All</button>
-          <button className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Revenue</button>
-          <button className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Transactions</button>
-          <button className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Refunds</button>
-          <button className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Compared to</button>
-          <button className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg flex items-center gap-1">
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Revenue</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Transactions</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Refunds</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg">Compared to</button>
+          <button className="px-3 py-1.5 text-sm text-[var(--text-sec)] hover:bg-[var(--bg-panel)] rounded-lg flex items-center gap-1">
             Previous month <ChevronDown className="w-4 h-4" />
           </button>
         </div>
@@ -229,7 +229,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-              <span className="text-sm text-gray-600">Revenue</span>
+              <span className="text-sm text-[var(--text-sec)]">Revenue</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${thisPeriodTotal.toLocaleString()}</h3>
@@ -238,13 +238,13 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 +{percentChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-              <span className="text-sm text-gray-600">Transactions</span>
+              <span className="text-sm text-[var(--text-sec)]">Transactions</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${18420}</h3>
@@ -253,13 +253,13 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 +{transactionsChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
           </div>
 
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-              <span className="text-sm text-gray-600">Refunds</span>
+              <span className="text-sm text-[var(--text-sec)]">Refunds</span>
             </div>
             <div className="flex items-baseline gap-2">
               <h3 className="text-3xl">${refunds.toLocaleString()}</h3>
@@ -268,7 +268,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                 {refundsChange.toFixed(0)}%
               </span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">vs last period</p>
+            <p className="text-xs text-[var(--text-mute)] mt-1">vs last period</p>
           </div>
         </div>
 
@@ -326,32 +326,32 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
       </div>
 
       {/* Action Bar */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+      <div className="bg-[var(--bg-panel-inner)] rounded-xl p-4 shadow-sm border border-[var(--border-subtle)] mb-4">
         <div className="flex items-center gap-3">
           <div className="flex-1 relative">
-            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
             <input
               type="text"
               placeholder="Search sales by customer, ID, or product..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-10 pr-4 py-2 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <button
             className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-              showFilters ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              showFilters ? 'bg-indigo-600 text-white' : 'bg-[var(--bg-panel)] text-[var(--text-sec)] hover:bg-[var(--bg-panel)]'
             }`}
             onClick={() => setShowFilters(!showFilters)}
           >
             <Filter className="w-4 h-4" />
             Filter
           </button>
-          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-200">
+          <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Download className="w-4 h-4" />
             Export CSV
           </button>
-          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-200">
+          <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <FileText className="w-4 h-4" />
             Export PDF
           </button>
@@ -366,11 +366,11 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-5 gap-4">
+          <div className="mt-4 pt-4 border-t border-[var(--border-core)] grid grid-cols-5 gap-4">
             <div>
-              <label className="block text-sm text-gray-600 mb-2">Date Range</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">Date Range</label>
               <select
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.dateRange}
                 onChange={(e) => setFilters({ ...filters, dateRange: e.target.value })}
               >
@@ -382,9 +382,9 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">Payment Method</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">Payment Method</label>
               <select
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.paymentMethod}
                 onChange={(e) => setFilters({ ...filters, paymentMethod: e.target.value })}
               >
@@ -396,9 +396,9 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">Status</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">Status</label>
               <select
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.status}
                 onChange={(e) => setFilters({ ...filters, status: e.target.value })}
               >
@@ -409,21 +409,21 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">Min Amount</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">Min Amount</label>
               <input
                 type="number"
                 placeholder="$0"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.minAmount}
                 onChange={(e) => setFilters({ ...filters, minAmount: e.target.value })}
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-2">Max Amount</label>
+              <label className="block text-sm text-[var(--text-sec)] mb-2">Max Amount</label>
               <input
                 type="number"
                 placeholder="$10000"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-[var(--border-core)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={filters.maxAmount}
                 onChange={(e) => setFilters({ ...filters, maxAmount: e.target.value })}
               />
@@ -433,43 +433,43 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
       </div>
 
       {/* Sales Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-[var(--bg-panel-inner)] rounded-xl shadow-sm border border-[var(--border-subtle)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-[var(--bg-core)] border-b border-[var(--border-subtle)]">
               <tr>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     ID <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Customer <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Date <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Items <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Total <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Payment <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
-                  <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+                  <button className="flex items-center gap-2 text-sm text-[var(--text-sec)] hover:text-[var(--text-core)]">
                     Status <ChevronDown className="w-4 h-4" />
                   </button>
                 </th>
@@ -480,7 +480,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
               {mockSales.map((sale, index) => (
                 <tr
                   key={sale.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                  className="border-b border-[var(--border-subtle)] hover:bg-[var(--bg-core)] transition-colors"
                 >
                   <td className="px-6 py-4 text-sm">
                     <button
@@ -500,11 +500,11 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                       <span className="text-sm">{sale.customer}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{sale.date}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{sale.items.length} item(s)</td>
+                  <td className="px-6 py-4 text-sm text-[var(--text-sec)]">{sale.date}</td>
+                  <td className="px-6 py-4 text-sm text-[var(--text-sec)]">{sale.items.length} item(s)</td>
                   <td className="px-6 py-4 text-sm">${sale.total.toFixed(2)}</td>
                   <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 text-gray-700 rounded-md text-xs capitalize">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-md text-xs capitalize">
                       {sale.paymentMethod === 'cash' && <Wallet className="w-3 h-3" />}
                       {sale.paymentMethod === 'telebirr' && <Smartphone className="w-3 h-3" />}
                       {sale.paymentMethod === 'bank' && <Building2 className="w-3 h-3" />}
@@ -516,7 +516,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs capitalize ${
                       sale.status === 'complete' ? 'bg-green-100 text-green-700' :
                       sale.status === 'pending' ? 'bg-orange-100 text-orange-700' :
-                      'bg-gray-100 text-gray-700'
+                      'bg-[var(--bg-panel)] text-[var(--text-sec)]'
                     }`}>
                       <div className={`w-1.5 h-1.5 rounded-full ${
                         sale.status === 'complete' ? 'bg-green-500' :
@@ -535,7 +535,7 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
                         View
                       </button>
                       <button
-                        className="text-gray-400 hover:text-gray-600"
+                        className="text-[var(--text-mute)] hover:text-[var(--text-sec)]"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <MoreVertical className="w-5 h-5" />
@@ -549,14 +549,14 @@ function SalesListView({ onNewSale, onViewSale }: { onNewSale: () => void; onVie
         </div>
 
         {/* Pagination */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between">
-          <p className="text-sm text-gray-600">Showing 1 to {mockSales.length} of {mockSales.length} sales</p>
+        <div className="px-6 py-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
+          <p className="text-sm text-[var(--text-sec)]">Showing 1 to {mockSales.length} of {mockSales.length} sales</p>
           <div className="flex gap-2">
-            <button className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50">Previous</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">Previous</button>
             <button className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-sm">1</button>
-            <button className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50">2</button>
-            <button className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50">3</button>
-            <button className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm hover:bg-gray-50">Next</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">2</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">3</button>
+            <button className="px-3 py-1.5 border border-[var(--border-core)] rounded-lg text-sm hover:bg-[var(--bg-core)]">Next</button>
           </div>
         </div>
       </div>
@@ -621,13 +621,13 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
       <div className="mb-6 flex items-center gap-4">
         <button
           onClick={onBack}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-[var(--bg-panel)] rounded-lg transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div>
           <h1 className="text-2xl">Create New Sale</h1>
-          <p className="text-gray-600 text-sm">Record a new sales transaction</p>
+          <p className="text-[var(--text-sec)] text-sm">Record a new sales transaction</p>
         </div>
       </div>
 
@@ -635,15 +635,15 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
         {/* Left Column - Form */}
         <div className="col-span-2 space-y-6">
           {/* Customer & Date */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Sale Details</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Customer *</label>
+                <label className="block text-sm text-[var(--text-sec)] mb-2">Customer *</label>
                 <div className="relative">
-                  <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
                   <select
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full pl-10 pr-4 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     value={selectedCustomer}
                     onChange={(e) => setSelectedCustomer(e.target.value)}
                   >
@@ -656,26 +656,26 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 <input
                   type="text"
                   placeholder="Or type new customer name"
-                  className="w-full mt-2 px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full mt-2 px-3 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={newCustomerName}
                   onChange={(e) => setNewCustomerName(e.target.value)}
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600 mb-2">Date & Time</label>
+                <label className="block text-sm text-[var(--text-sec)] mb-2">Date & Time</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="relative">
-                    <Calendar className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Calendar className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
                     <input
                       type="date"
-                      className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full pl-10 pr-3 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       value={saleDate}
                       onChange={(e) => setSaleDate(e.target.value)}
                     />
                   </div>
                   <input
                     type="time"
-                    className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-3 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     value={saleTime}
                     onChange={(e) => setSaleTime(e.target.value)}
                   />
@@ -685,30 +685,30 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
           </div>
 
           {/* Product Selector */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Add Products</h3>
             <div className="relative mb-4">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-mute)]" />
               <input
                 type="text"
                 placeholder="Search products to add..."
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-10 pr-4 py-2.5 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
               />
             </div>
 
             {searchProduct && filteredProducts.length > 0 && (
-              <div className="mb-4 border border-gray-200 rounded-lg max-h-48 overflow-y-auto">
+              <div className="mb-4 border border-[var(--border-core)] rounded-lg max-h-48 overflow-y-auto">
                 {filteredProducts.map(product => (
                   <button
                     key={product.id}
-                    className="w-full px-4 py-3 hover:bg-gray-50 text-left flex items-center justify-between border-b border-gray-100 last:border-0"
+                    className="w-full px-4 py-3 hover:bg-[var(--bg-core)] text-left flex items-center justify-between border-b border-[var(--border-subtle)] last:border-0"
                     onClick={() => addLineItem(product)}
                   >
                     <div>
                       <p className="text-sm">{product.name}</p>
-                      <p className="text-xs text-gray-500">{product.category} • {product.stock} in stock</p>
+                      <p className="text-xs text-[var(--text-mute)]">{product.category} • {product.stock} in stock</p>
                     </div>
                     <span className="text-sm">${product.price}</span>
                   </button>
@@ -718,20 +718,20 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
 
             {/* Line Items */}
             {lineItems.length > 0 && (
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="border border-[var(--border-core)] rounded-lg overflow-hidden">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-[var(--bg-core)] border-b border-[var(--border-core)]">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs text-gray-600">Product</th>
-                      <th className="px-4 py-3 text-left text-xs text-gray-600">Qty</th>
-                      <th className="px-4 py-3 text-left text-xs text-gray-600">Unit Price</th>
-                      <th className="px-4 py-3 text-left text-xs text-gray-600">Subtotal</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Product</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Qty</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Unit Price</th>
+                      <th className="px-4 py-3 text-left text-xs text-[var(--text-sec)]">Subtotal</th>
                       <th className="px-4 py-3"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {lineItems.map(item => (
-                      <tr key={item.id} className="border-b border-gray-100 last:border-0">
+                      <tr key={item.id} className="border-b border-[var(--border-subtle)] last:border-0">
                         <td className="px-4 py-3 text-sm">{item.product}</td>
                         <td className="px-4 py-3">
                           <input
@@ -739,7 +739,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                             min="1"
                             value={item.quantity}
                             onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 1)}
-                            className="w-16 px-2 py-1 border border-gray-200 rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="w-16 px-2 py-1 border border-[var(--border-core)] rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           />
                         </td>
                         <td className="px-4 py-3 text-sm">${item.unitPrice.toFixed(2)}</td>
@@ -761,7 +761,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
           </div>
 
           {/* Payment Method */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Payment Method</h3>
             <div className="grid grid-cols-4 gap-3">
               <button
@@ -769,10 +769,10 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 className={`p-4 rounded-lg border-2 transition-all ${
                   paymentMethod === 'cash'
                     ? 'border-indigo-600 bg-indigo-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-[var(--border-core)] hover:border-[var(--border-subtle)]'
                 }`}
               >
-                <Wallet className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'cash' ? 'text-indigo-600' : 'text-gray-400'}`} />
+                <Wallet className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'cash' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
                 <p className="text-sm text-center">Cash</p>
               </button>
               <button
@@ -780,10 +780,10 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 className={`p-4 rounded-lg border-2 transition-all ${
                   paymentMethod === 'telebirr'
                     ? 'border-indigo-600 bg-indigo-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-[var(--border-core)] hover:border-[var(--border-subtle)]'
                 }`}
               >
-                <Smartphone className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'telebirr' ? 'text-indigo-600' : 'text-gray-400'}`} />
+                <Smartphone className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'telebirr' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
                 <p className="text-sm text-center">Telebirr</p>
               </button>
               <button
@@ -791,10 +791,10 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 className={`p-4 rounded-lg border-2 transition-all ${
                   paymentMethod === 'bank'
                     ? 'border-indigo-600 bg-indigo-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-[var(--border-core)] hover:border-[var(--border-subtle)]'
                 }`}
               >
-                <Building2 className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'bank' ? 'text-indigo-600' : 'text-gray-400'}`} />
+                <Building2 className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'bank' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
                 <p className="text-sm text-center">Bank</p>
               </button>
               <button
@@ -802,21 +802,21 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
                 className={`p-4 rounded-lg border-2 transition-all ${
                   paymentMethod === 'credit'
                     ? 'border-indigo-600 bg-indigo-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-[var(--border-core)] hover:border-[var(--border-subtle)]'
                 }`}
               >
-                <CreditCard className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'credit' ? 'text-indigo-600' : 'text-gray-400'}`} />
+                <CreditCard className={`w-6 h-6 mx-auto mb-2 ${paymentMethod === 'credit' ? 'text-indigo-600' : 'text-[var(--text-mute)]'}`} />
                 <p className="text-sm text-center">Credit</p>
               </button>
             </div>
           </div>
 
           {/* Notes */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Notes (Optional)</h3>
             <textarea
               placeholder="Add memo or reference number..."
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full px-4 py-3 border border-[var(--border-core)] rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -827,23 +827,23 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
         {/* Right Column - Summary */}
         <div className="space-y-6">
           {/* Totals Panel */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 sticky top-6">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)] sticky top-6">
             <h3 className="mb-4">Summary</h3>
 
-            <div className="space-y-3 mb-4 pb-4 border-b border-gray-200">
+            <div className="space-y-3 mb-4 pb-4 border-b border-[var(--border-core)]">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Subtotal</span>
+                <span className="text-[var(--text-sec)]">Subtotal</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">Discount</span>
+                <span className="text-[var(--text-sec)]">Discount</span>
                 <input
                   type="number"
                   min="0"
                   max={subtotal}
                   value={discount}
                   onChange={(e) => setDiscount(parseFloat(e.target.value) || 0)}
-                  className="w-24 px-2 py-1 border border-gray-200 rounded text-right focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-24 px-2 py-1 border border-[var(--border-core)] rounded text-right focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="0.00"
                 />
               </div>
@@ -868,7 +868,7 @@ function NewSaleView({ onBack }: { onBack: () => void }) {
               </button>
               <button
                 onClick={onBack}
-                className="w-full px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                className="w-full px-4 py-3 border border-[var(--border-subtle)] text-[var(--text-sec)] rounded-lg hover:bg-[var(--bg-core)]"
               >
                 Cancel
               </button>
@@ -907,27 +907,27 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
         <div className="flex items-center gap-4">
           <button
             onClick={onBack}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-[var(--bg-panel)] rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
             <h1 className="text-2xl">Sale {sale.id}</h1>
-            <p className="text-gray-600 text-sm">{sale.date} at {sale.time}</p>
+            <p className="text-[var(--text-sec)] text-sm">{sale.date} at {sale.time}</p>
           </div>
         </div>
         <div className="flex gap-2">
-          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-200">
+          <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Printer className="w-4 h-4" />
             Print
           </button>
-          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-200">
+          <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Send className="w-4 h-4" />
             Send SMS
           </button>
           <button
             onClick={onEdit}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-200"
+            className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]"
           >
             <Edit2 className="w-4 h-4" />
             Edit
@@ -943,12 +943,12 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
         {/* Left Column - Invoice Details */}
         <div className="col-span-2 space-y-6">
           {/* Invoice Preview */}
-          <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-8 shadow-sm border border-[var(--border-subtle)]">
             <div className="flex items-start justify-between mb-8">
               <div>
                 <h2 className="text-xl mb-1">INVOICE</h2>
-                <p className="text-sm text-gray-600">Invoice Number: {sale.id}</p>
-                <p className="text-sm text-gray-600">Date: {sale.date}</p>
+                <p className="text-sm text-[var(--text-sec)]">Invoice Number: {sale.id}</p>
+                <p className="text-sm text-[var(--text-sec)]">Date: {sale.date}</p>
               </div>
               <div className="w-16 h-16 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <ShoppingBag className="w-8 h-8 text-white" />
@@ -956,34 +956,34 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
             </div>
 
             {/* Business Info */}
-            <div className="mb-8 pb-8 border-b border-gray-200">
+            <div className="mb-8 pb-8 border-b border-[var(--border-core)]">
               <p className="text-sm mb-1">My Business Name</p>
-              <p className="text-xs text-gray-600">123 Business Street</p>
-              <p className="text-xs text-gray-600">Addis Ababa, Ethiopia</p>
-              <p className="text-xs text-gray-600">+251 911 123456</p>
+              <p className="text-xs text-[var(--text-sec)]">123 Business Street</p>
+              <p className="text-xs text-[var(--text-sec)]">Addis Ababa, Ethiopia</p>
+              <p className="text-xs text-[var(--text-sec)]">+251 911 123456</p>
             </div>
 
             {/* Customer Info */}
             <div className="mb-8">
-              <p className="text-xs text-gray-600 mb-2">BILL TO</p>
+              <p className="text-xs text-[var(--text-sec)] mb-2">BILL TO</p>
               <p className="text-sm mb-1">{sale.customer}</p>
-              {sale.customerPhone && <p className="text-xs text-gray-600">{sale.customerPhone}</p>}
+              {sale.customerPhone && <p className="text-xs text-[var(--text-sec)]">{sale.customerPhone}</p>}
             </div>
 
             {/* Line Items */}
             <div className="mb-8">
               <table className="w-full">
-                <thead className="border-b border-gray-200">
+                <thead className="border-b border-[var(--border-core)]">
                   <tr>
-                    <th className="text-left py-3 text-xs text-gray-600">ITEM</th>
-                    <th className="text-right py-3 text-xs text-gray-600">QTY</th>
-                    <th className="text-right py-3 text-xs text-gray-600">UNIT PRICE</th>
-                    <th className="text-right py-3 text-xs text-gray-600">AMOUNT</th>
+                    <th className="text-left py-3 text-xs text-[var(--text-sec)]">ITEM</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">QTY</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">UNIT PRICE</th>
+                    <th className="text-right py-3 text-xs text-[var(--text-sec)]">AMOUNT</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sale.items.map(item => (
-                    <tr key={item.id} className="border-b border-gray-100">
+                    <tr key={item.id} className="border-b border-[var(--border-subtle)]">
                       <td className="py-3 text-sm">{item.product}</td>
                       <td className="py-3 text-sm text-right">{item.quantity}</td>
                       <td className="py-3 text-sm text-right">${item.unitPrice.toFixed(2)}</td>
@@ -998,16 +998,16 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
             <div className="flex justify-end">
               <div className="w-64 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-[var(--text-sec)]">Subtotal</span>
                   <span>${sale.subtotal.toFixed(2)}</span>
                 </div>
                 {sale.discount > 0 && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Discount</span>
+                    <span className="text-[var(--text-sec)]">Discount</span>
                     <span className="text-red-600">-${sale.discount.toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex justify-between pt-2 border-t border-gray-200">
+                <div className="flex justify-between pt-2 border-t border-[var(--border-core)]">
                   <span className="text-lg">Total</span>
                   <span className="text-lg">${sale.total.toFixed(2)}</span>
                 </div>
@@ -1016,9 +1016,9 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
 
             {/* Notes */}
             {sale.notes && (
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <p className="text-xs text-gray-600 mb-2">NOTES</p>
-                <p className="text-sm text-gray-700">{sale.notes}</p>
+              <div className="mt-8 pt-8 border-t border-[var(--border-core)]">
+                <p className="text-xs text-[var(--text-sec)] mb-2">NOTES</p>
+                <p className="text-sm text-[var(--text-sec)]">{sale.notes}</p>
               </div>
             )}
           </div>
@@ -1027,27 +1027,27 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
         {/* Right Column - Info & Actions */}
         <div className="space-y-6">
           {/* Payment Info */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Payment Information</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-gray-600 mb-1">Payment Method</p>
+                <p className="text-xs text-[var(--text-sec)] mb-1">Payment Method</p>
                 <div className="flex items-center gap-2">
-                  {sale.paymentMethod === 'cash' && <Wallet className="w-4 h-4 text-gray-600" />}
-                  {sale.paymentMethod === 'telebirr' && <Smartphone className="w-4 h-4 text-gray-600" />}
-                  {sale.paymentMethod === 'bank' && <Building2 className="w-4 h-4 text-gray-600" />}
-                  {sale.paymentMethod === 'credit' && <CreditCard className="w-4 h-4 text-gray-600" />}
+                  {sale.paymentMethod === 'cash' && <Wallet className="w-4 h-4 text-[var(--text-sec)]" />}
+                  {sale.paymentMethod === 'telebirr' && <Smartphone className="w-4 h-4 text-[var(--text-sec)]" />}
+                  {sale.paymentMethod === 'bank' && <Building2 className="w-4 h-4 text-[var(--text-sec)]" />}
+                  {sale.paymentMethod === 'credit' && <CreditCard className="w-4 h-4 text-[var(--text-sec)]" />}
                   <span className="text-sm capitalize">{sale.paymentMethod}</span>
                 </div>
               </div>
-              <div className="pt-3 border-t border-gray-200">
+              <div className="pt-3 border-t border-[var(--border-core)]">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-600">Amount Paid</span>
+                  <span className="text-[var(--text-sec)]">Amount Paid</span>
                   <span className="text-green-600">${sale.amountPaid.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Balance Due</span>
-                  <span className={sale.balanceDue > 0 ? 'text-red-600' : 'text-gray-900'}>
+                  <span className="text-[var(--text-sec)]">Balance Due</span>
+                  <span className={sale.balanceDue > 0 ? 'text-red-600' : 'text-[var(--text-core)]'}>
                     ${sale.balanceDue.toFixed(2)}
                   </span>
                 </div>
@@ -1056,13 +1056,13 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
           </div>
 
           {/* Status */}
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
             <h3 className="mb-4">Status</h3>
             <div>
               <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm capitalize ${
                 sale.status === 'complete' ? 'bg-green-100 text-green-700' :
                 sale.status === 'pending' ? 'bg-orange-100 text-orange-700' :
-                'bg-gray-100 text-gray-700'
+                'bg-[var(--bg-panel)] text-[var(--text-sec)]'
               }`}>
                 <div className={`w-2 h-2 rounded-full ${
                   sale.status === 'complete' ? 'bg-green-500' :
@@ -1076,7 +1076,7 @@ function SaleDetailView({ saleId, onBack, onEdit }: { saleId: string; onBack: ()
 
           {/* Actions */}
           {sale.status === 'complete' && sale.balanceDue > 0 && (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-[var(--bg-panel-inner)] rounded-xl p-6 shadow-sm border border-[var(--border-subtle)]">
               <h3 className="mb-4">Quick Actions</h3>
               <button className="w-full px-4 py-2.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
                 Convert to Debt
