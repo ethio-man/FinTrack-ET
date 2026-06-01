@@ -15,6 +15,7 @@ import ReportsView from "./Reports/ReportsView";
 import TrustScorePage from "./TrustScore/TrustScorePage";
 import TeamPage from "./Team/TeamPage";
 import SettingsPage from "./Settings/SettingsPage";
+import HelpModal from "./HelpModal";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -37,6 +38,7 @@ export default function DashboardHome({
   const [searchFocused, setSearchFocused] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   // Keyboard shortcut listener for Ctrl+K search focus
   useEffect(() => {
@@ -55,7 +57,12 @@ export default function DashboardHome({
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[var(--bg-core)] text-[var(--text-core)] transition-colors duration-300 font-sans" id="dashboard-main">
-      <Sidebar selectedLanguage={selectedLanguage} activeItem={activeTab} setActiveItem={setActiveTab} />
+      <Sidebar 
+        selectedLanguage={selectedLanguage} 
+        activeItem={activeTab} 
+        setActiveItem={setActiveTab} 
+        onOpenHelp={() => setIsHelpOpen(true)}
+      />
       
       <div className="flex-1 flex flex-col h-full relative overflow-y-auto pb-16 md:pb-0">
         <DashboardHeader
@@ -114,6 +121,13 @@ export default function DashboardHome({
       </div>
 
       <MobileBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      {isHelpOpen && (
+        <HelpModal 
+          selectedLanguage={selectedLanguage}
+          onClose={() => setIsHelpOpen(false)} 
+        />
+      )}
     </div>
   );
 }

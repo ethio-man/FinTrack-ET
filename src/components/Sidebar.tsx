@@ -22,9 +22,10 @@ interface SidebarProps {
   selectedLanguage: LanguageOpt;
   activeItem: string;
   setActiveItem: (item: string) => void;
+  onOpenHelp: () => void;
 }
 
-export default function Sidebar({ selectedLanguage, activeItem, setActiveItem }: SidebarProps) {
+export default function Sidebar({ selectedLanguage, activeItem, setActiveItem, onOpenHelp }: SidebarProps) {
   const isAmharic = selectedLanguage.code === 'am';
   const t = {
     dashboard: isAmharic ? "ዳሽቦርድ" : "Dashboard",
@@ -158,7 +159,7 @@ export default function Sidebar({ selectedLanguage, activeItem, setActiveItem }:
             <Settings className="w-4.5 h-4.5" />
             {t.settings}
           </a>
-          <a onClick={() => setActiveItem('Help')} className={navItemClass('Help')}>
+          <a onClick={onOpenHelp} className={navItemClass('Help')}>
             <HelpCircle className="w-4.5 h-4.5" />
             {t.help}
           </a>
