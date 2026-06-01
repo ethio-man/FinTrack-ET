@@ -9,6 +9,7 @@ import PlaceholderContent from "./Dashboard/PlaceholderContent";
 import SalesPage from "./SalesPage";
 import ExpensesPage from "./Expenses/ExpensesPage";
 import DebtsPage from "./Debts/DebtsPage";
+import InventoryPage from "./Inventory/InventoryPage";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -86,6 +87,8 @@ export default function DashboardHome({
           <ExpensesPage language={selectedLanguage} />
         ) : activeTab === "Debts" ? (
           <DebtsPage selectedLanguage={selectedLanguage} />
+        ) : activeTab === "Inventory" ? (
+          <InventoryPage selectedLanguage={selectedLanguage} />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}
