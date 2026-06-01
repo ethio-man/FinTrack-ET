@@ -35,20 +35,40 @@ const PeriodPicker = ({ selectedPeriod, onPeriodChange, t }: { selectedPeriod: s
   );
 };
 
-const ExportBar = ({ t }: { t: any }) => {
+const ExportBar = ({ t, selectedReport }: { t: any, selectedReport: string }) => {
+  const handleExportExcel = () => {
+    let csv = '';
+    const dateStr = new Date().toISOString().split('T')[0];
+
+    if (selectedReport === 'profit-loss') {
+      csv = 'Month,Revenue,Expenses,Profit\n' + monthlyProfitLoss.map(r => `${r.month},${r.revenue},${r.expenses},${r.profit}`).join('\n');
+    } else if (selectedReport === 'debt') {
+      csv = 'Category,Amount,Count\n' + debtAgingData.map(r => `${r.category},${r.amount},${r.count}`).join('\n');
+    } else if (selectedReport === 'tax') {
+      csv = 'Category,Amount,Percentage\n' + taxBreakdown.map(r => `${r.category},${r.amount},${r.percentage}`).join('\n');
+    } else if (selectedReport === 'expense') {
+      csv = 'Category,Amount,Percentage\n' + expensesByCategory.map(r => `${r.name},${r.amount},${r.percentage}`).join('\n');
+    } else if (selectedReport === 'cashflow') {
+      csv = 'Day,CashIn,CashOut,Net\n' + cashFlowData.map(r => `${r.day},${r.cashIn},${r.cashOut},${r.net}`).join('\n');
+    }
+
+    if (!csv) return;
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `fintrack_${selectedReport}_report_${dateStr}.csv`;
+    link.click();
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <button className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
+      <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
         <FileText className="w-4 h-4 text-red-500" />
         {t.exportPdf}
       </button>
-      <button className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
+      <button onClick={handleExportExcel} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
         <FileSpreadsheet className="w-4 h-4 text-green-600" />
         {t.exportExcel}
-      </button>
-      <button className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
-        <Mail className="w-4 h-4 text-indigo-500" />
-        {t.share}
       </button>
       <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
         <Printer className="w-4 h-4 text-[var(--text-sec)]" />
@@ -654,7 +674,7 @@ export default function ReportsView({ language }: { language: LanguageOpt }) {
             <h1 className="text-2xl font-bold text-[var(--text-core)] mb-1 tracking-tight">{t.reportsHub}</h1>
             <p className="text-sm font-medium text-[var(--text-sec)]">{t.reportsDesc}</p>
           </div>
-          <ExportBar t={t} />
+          <ExportBar t={t} selectedReport={selectedReport} />
         </div>
 
         {/* Report Tabs */}
