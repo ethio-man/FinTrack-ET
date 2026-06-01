@@ -74,6 +74,15 @@ export const teamTranslations = {
     locationPlaceholder: "Address / area / city",
     addBranchBtn: "Add Branch",
     
+    // Edit Branch Modal
+    editBranchTitle: "Edit Branch — {name}",
+    saveChanges: "Save Changes",
+
+    // Branch Report Modal
+    branchReportTitle: "Branch Report — {name}",
+    reportComingSoon: "Detailed branch reporting functionality is coming soon. For now, you can view the basic stats for {name}.",
+    closeReport: "Close Report",
+
     // Permissions Modal
     permissionsMatrix: "Permissions Matrix",
     viewPermissionsFor: "View permissions for",
@@ -175,6 +184,15 @@ export const teamTranslations = {
     locationRequired: "አካባቢ ያስፈልጋል",
     locationPlaceholder: "አድራሻ / ሰፈር / ከተማ",
     addBranchBtn: "ቅርንጫፍ ያክሉ",
+
+    // Edit Branch Modal
+    editBranchTitle: "ቅርንጫፍ አስተካክል — {name}",
+    saveChanges: "ለውጦችን አስቀምጥ",
+
+    // Branch Report Modal
+    branchReportTitle: "የቅርንጫፍ ሪፖርት — {name}",
+    reportComingSoon: "ዝርዝር የቅርንጫፍ ሪፖርት ማቅረቢያ ተግባር በቅርቡ ይመጣል። ለአሁን፣ የ{name}ን መሰረታዊ ስታቲስቲክስ ማየት ይችላሉ።",
+    closeReport: "ሪፖርቱን ዝጋ",
 
     // Permissions Modal
     permissionsMatrix: "የፍቃዶች ማትሪክስ",
