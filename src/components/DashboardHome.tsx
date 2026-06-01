@@ -8,6 +8,7 @@ import MobileSearchOverlay from "./Dashboard/MobileSearchOverlay";
 import PlaceholderContent from "./Dashboard/PlaceholderContent";
 import SalesPage from "./SalesPage";
 import ExpensesPage from "./Expenses/ExpensesPage";
+import DebtsPage from "./Debts/DebtsPage";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -83,6 +84,8 @@ export default function DashboardHome({
           <SalesPage selectedLanguage={selectedLanguage} />
         ) : activeTab === "Expenses" ? (
           <ExpensesPage language={selectedLanguage} />
+        ) : activeTab === "Debts" ? (
+          <DebtsPage selectedLanguage={selectedLanguage} />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}
