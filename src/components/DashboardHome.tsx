@@ -14,6 +14,7 @@ import InvoicesPage from "./Invoices/InvoicesPage";
 import ReportsView from "./Reports/ReportsView";
 import TrustScorePage from "./TrustScore/TrustScorePage";
 import TeamPage from "./Team/TeamPage";
+import SettingsPage from "./Settings/SettingsPage";
 
 interface DashboardHomeProps {
   userEmail: string;
@@ -101,6 +102,8 @@ export default function DashboardHome({
           <TrustScorePage selectedLanguage={selectedLanguage} />
         ) : activeTab === "Team" ? (
           <TeamPage selectedLanguage={selectedLanguage} />
+        ) : activeTab === "Settings" ? (
+          <SettingsPage selectedLanguage={selectedLanguage} />
         ) : (
           <PlaceholderContent
             activeTab={activeTab}
