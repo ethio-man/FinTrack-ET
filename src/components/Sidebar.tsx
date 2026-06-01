@@ -133,10 +133,7 @@ export default function Sidebar({ selectedLanguage, activeItem, setActiveItem }:
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
             </p>
             <nav className="flex flex-col space-y-1">
-              <a onClick={() => setActiveItem('Analytics')} className={navItemClass('Analytics')}>
-                <PieChart className="w-4.5 h-4.5" />
-                {t.analytics}
-              </a>
+
               <a onClick={() => setActiveItem('Trust Score')} className={navItemClass('Trust Score')}>
                 <ShieldCheck className="w-4.5 h-4.5" />
                 {t.trustScore}
@@ -156,15 +153,7 @@ export default function Sidebar({ selectedLanguage, activeItem, setActiveItem }:
       {/* Bottom Group */}
       <div className="pt-4 border-t border-[var(--border-subtle)] mt-2">
         <nav className="flex flex-col space-y-1">
-          <a onClick={() => setActiveItem('Notifications')} className={`justify-between ${navItemClass('Notifications')}`}>
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Bell className="w-4.5 h-4.5" />
-                <span className="absolute 0 right-0.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[var(--bg-panel)]"></span>
-              </div>
-              <span>{t.notifications}</span>
-            </div>
-          </a>
+
           <a onClick={() => setActiveItem('Settings')} className={navItemClass('Settings')}>
             <Settings className="w-4.5 h-4.5" />
             {t.settings}

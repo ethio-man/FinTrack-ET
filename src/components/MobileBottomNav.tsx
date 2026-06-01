@@ -72,10 +72,7 @@ export default function MobileBottomNav({ activeTab, setActiveTab }: MobileBotto
                <div>
                  <p className="text-xs font-bold text-[var(--text-mute)] uppercase mb-3">Premium Features</p>
                  <div className="space-y-2">
-                    <button className="w-full flex items-center justify-between p-3 bg-[var(--bg-core)] rounded-xl border border-[var(--border-subtle)]">
-                      <span className="font-semibold text-sm">Analytics</span>
-                      <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">PRO</span>
-                    </button>
+
                     <button className="w-full flex items-center justify-between p-3 bg-[var(--bg-core)] rounded-xl border border-[var(--border-subtle)]">
                       <span className="font-semibold text-sm">Trust Score</span>
                       <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold">PRO</span>
@@ -90,10 +87,7 @@ export default function MobileBottomNav({ activeTab, setActiveTab }: MobileBotto
                <div>
                  <p className="text-xs font-bold text-[var(--text-mute)] uppercase mb-3">Settings & Support</p>
                  <div className="space-y-2">
-                    <button className="w-full flex items-center justify-between p-3 bg-[var(--bg-core)] rounded-xl border border-[var(--border-subtle)]">
-                      <span className="font-semibold text-sm">Notifications</span>
-                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
+
                     <button className="w-full flex items-center justify-between p-3 bg-[var(--bg-core)] rounded-xl border border-[var(--border-subtle)]">
                       <span className="font-semibold text-sm">Preferences</span>
                     </button>
