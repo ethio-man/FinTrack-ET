@@ -66,7 +66,7 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
           </div>
         </div>
         <div className="flex gap-2">
-          <button className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
+          <button onClick={() => window.print()} className="px-4 py-2 bg-[var(--bg-panel)] text-[var(--text-sec)] rounded-lg flex items-center gap-2 hover:bg-[var(--bg-panel)]">
             <Printer className="w-4 h-4" />
             {t.print}
           </button>
@@ -92,7 +92,7 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
         {/* Left Column - Invoice Details */}
         <div className="col-span-2 space-y-6">
           {/* Invoice Preview */}
-          <div className="bg-[var(--bg-panel-inner)] rounded-xl p-8 shadow-sm border border-[var(--border-subtle)]">
+          <div id="printable-invoice" className="bg-[var(--bg-panel-inner)] rounded-xl p-8 shadow-sm border border-[var(--border-subtle)]">
             <div className="flex items-start justify-between mb-8">
               <div>
                 <h2 className="text-xl mb-1">{t.invoice.toUpperCase()}</h2>

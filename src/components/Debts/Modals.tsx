@@ -259,7 +259,7 @@ export function AgreementModal({ debt, onClose, language }: { debt: Debt; onClos
   return (
     <Modal title={t.paymentAgreement} onClose={onClose}>
       <div className="space-y-4">
-        <div className="bg-[var(--bg-panel-inner)] rounded-xl p-5 text-sm leading-relaxed text-[var(--text-core)] border border-[var(--border-core)]" style={{ fontFamily: 'serif' }}>
+        <div id="printable-invoice" className="bg-[var(--bg-panel-inner)] rounded-xl p-5 text-sm leading-relaxed text-[var(--text-core)] border border-[var(--border-core)] print:border-none" style={{ fontFamily: 'serif' }}>
           <p className="text-center mb-4 text-base font-bold">{t.paymentAgreement}</p>
           <p>{t.agreementText1} <strong>{formatDate(TODAY)}</strong> {t.between}</p>
           <br />

@@ -310,7 +310,7 @@ export default function CreateInvoiceView({ onBack, onSave, language }: { onBack
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-6 bg-gray-50/50 dark:bg-gray-900/20">
-              <div className="shadow-2xl rounded-lg overflow-hidden transform origin-top transition-transform" style={{ transform: 'scale(0.85)', marginBottom: '-10%' }}>
+              <div id="printable-invoice" className="shadow-2xl rounded-lg overflow-hidden transform origin-top transition-transform print:shadow-none print:transform-none print:w-full print:m-0" style={{ transform: 'scale(0.85)', marginBottom: '-10%' }}>
                 <InvoiceDocument inv={draftInv} language={language} />
               </div>
             </div>

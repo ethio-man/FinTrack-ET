@@ -1909,3 +1909,26 @@ div[data-testid="RwAccordion"] button[class*="RwAccordion_rwAccordion__link__"] 
     color: #0d333f;
   }
 }
+
+@media print {
+  html, body {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #printable-invoice, #printable-invoice * {
+    visibility: visible;
+  }
+  #printable-invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff !important;
+  }
+}

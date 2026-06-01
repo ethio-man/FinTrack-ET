@@ -89,7 +89,7 @@ export default function InvoiceDetailView({ inv: initialInv, onBack, onEdit, onD
         </div>
 
         {/* Invoice document */}
-        <div className="shadow-2xl rounded-2xl overflow-hidden border border-[var(--border-subtle)]">
+        <div id="printable-invoice" className="shadow-2xl rounded-2xl overflow-hidden border border-[var(--border-subtle)] print:shadow-none print:border-none">
           <InvoiceDocument inv={inv} full language={language} />
         </div>
       </div>

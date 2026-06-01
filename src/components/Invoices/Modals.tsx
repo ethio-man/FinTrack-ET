@@ -77,8 +77,8 @@ export function FullScreenPreview({ inv, onClose, language }: { inv: Invoice; on
           <button onClick={onClose} className="p-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"><X className="w-4 h-4" /></button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto p-8 flex justify-center">
-        <div className="w-full max-w-2xl shadow-2xl">
+      <div className="flex-1 overflow-auto p-8 flex justify-center print:p-0">
+        <div id="printable-invoice" className="w-full max-w-2xl shadow-2xl print:shadow-none">
           <InvoiceDocument inv={inv} full language={language} />
         </div>
       </div>
