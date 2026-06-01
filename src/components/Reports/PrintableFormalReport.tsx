@@ -8,7 +8,7 @@ import {
 
 interface Props {
   settings: PrintSettings;
-  selectedReport: string;
+  selectedReport?: string;
 }
 
 // --- Cover Page ---
@@ -72,7 +72,8 @@ const PfsTemplate = ({
   rightTitle, 
   rightRows, 
   rightTotalLabel, 
-  rightTotal 
+  rightTotal,
+  showMetaGrid = false
 }: any) => {
   const maxRows = Math.max(leftRows.length, rightRows.length);
   const normalizedLeftRows = [...leftRows];
@@ -88,31 +89,35 @@ const PfsTemplate = ({
         <h1>{title.toUpperCase()}</h1>
       </div>
 
-      <div className="pfs-meta">
-        <div><span>Submitted To:</span> <strong>{settings.preparedForName}</strong></div>
-        <div><span>Date:</span> <strong>{new Date().toLocaleDateString()}</strong></div>
-      </div>
+      {showMetaGrid && (
+        <>
+          <div className="pfs-meta">
+            <div><span>Submitted To:</span> <strong>{settings.preparedForName}</strong></div>
+            <div><span>Date:</span> <strong>{new Date().toLocaleDateString()}</strong></div>
+          </div>
 
-      <div className="pfs-info-grid">
-        <div className="pfs-info-col">
-          <div className="pfs-info-header">Company Details</div>
-          <div className="pfs-info-row"><span>Name :</span> <span>{settings.companyName}</span></div>
-          <div className="pfs-info-row"><span>Address :</span> <span>{settings.companyAddress}</span></div>
-          <div className="pfs-info-row"><span>Contact No :</span> <span>{settings.companyContact}</span></div>
-          <div className="pfs-info-row"><span>Email :</span> <span>{settings.companyEmail}</span></div>
-          <div className="pfs-info-row"><span>Period :</span> <span>{settings.year}</span></div>
-          <div className="pfs-info-row"><span>Type :</span> <span>Business Profile</span></div>
-        </div>
-        <div className="pfs-info-col">
-          <div className="pfs-info-header">Prepared By</div>
-          <div className="pfs-info-row"><span>Name :</span> <span>{settings.preparedByName}</span></div>
-          <div className="pfs-info-row"><span>Title :</span> <span>{settings.preparedByTitle}</span></div>
-          <div className="pfs-info-row"><span>Contact No :</span> <span>{settings.preparedByContact}</span></div>
-          <div className="pfs-info-row"><span>Client/For :</span> <span>{settings.preparedForName}</span></div>
-          <div className="pfs-info-row"><span>Date Generated :</span> <span>{new Date().toLocaleDateString()}</span></div>
-          <div className="pfs-info-row"><span>Signature :</span> <span className="border-b border-black w-24 inline-block"></span></div>
-        </div>
-      </div>
+          <div className="pfs-info-grid">
+            <div className="pfs-info-col">
+              <div className="pfs-info-header">Company Details</div>
+              <div className="pfs-info-row"><span>Name :</span> <span>{settings.companyName}</span></div>
+              <div className="pfs-info-row"><span>Address :</span> <span>{settings.companyAddress}</span></div>
+              <div className="pfs-info-row"><span>Contact No :</span> <span>{settings.companyContact}</span></div>
+              <div className="pfs-info-row"><span>Email :</span> <span>{settings.companyEmail}</span></div>
+              <div className="pfs-info-row"><span>Period :</span> <span>{settings.year}</span></div>
+              <div className="pfs-info-row"><span>Type :</span> <span>Business Profile</span></div>
+            </div>
+            <div className="pfs-info-col">
+              <div className="pfs-info-header">Prepared By</div>
+              <div className="pfs-info-row"><span>Name :</span> <span>{settings.preparedByName}</span></div>
+              <div className="pfs-info-row"><span>Title :</span> <span>{settings.preparedByTitle}</span></div>
+              <div className="pfs-info-row"><span>Contact No :</span> <span>{settings.preparedByContact}</span></div>
+              <div className="pfs-info-row"><span>Client/For :</span> <span>{settings.preparedForName}</span></div>
+              <div className="pfs-info-row"><span>Date Generated :</span> <span>{new Date().toLocaleDateString()}</span></div>
+              <div className="pfs-info-row"><span>Signature :</span> <span className="border-b border-black w-24 inline-block"></span></div>
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="pfs-data-table">
         <div className="pfs-data-header">
@@ -166,6 +171,7 @@ const getProfitLossData = (settings: PrintSettings) => {
       rightRows={rightRows}
       rightTotalLabel="Total Expenses"
       rightTotal={fmt(profitLossData.expenses)}
+      showMetaGrid={true}
     />
   );
 };
@@ -256,22 +262,15 @@ const getCashFlowData = (settings: PrintSettings) => {
 };
 
 // --- Main Printable Report ---
-export default function PrintableFormalReport({ settings, selectedReport }: Props) {
-  const reportPage = () => {
-    switch (selectedReport) {
-      case 'profit-loss': return getProfitLossData(settings);
-      case 'debt': return getDebtData(settings);
-      case 'tax': return getTaxData(settings);
-      case 'expense': return getExpenseData(settings);
-      case 'cashflow': return getCashFlowData(settings);
-      default: return getProfitLossData(settings);
-    }
-  };
-
+export default function PrintableFormalReport({ settings }: Props) {
   return (
     <div id="formal-report-print" className="formal-report-container">
       <CoverPage settings={settings} />
-      {reportPage()}
+      {getProfitLossData(settings)}
+      {getDebtData(settings)}
+      {getTaxData(settings)}
+      {getExpenseData(settings)}
+      {getCashFlowData(settings)}
     </div>
   );
 }
