@@ -27,7 +27,7 @@ export default function DebtsPage({ selectedLanguage }: DebtsPageProps) {
   }
 
   return (
-    <div className="p-6 max-w-[1400px] mx-auto">
+    <div className="p-6 w-full h-full">
       {selectedDebt ? (
         <DebtDetail
           debt={selectedDebt}

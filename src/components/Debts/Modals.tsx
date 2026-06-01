@@ -7,15 +7,19 @@ import { Avatar } from './DebtComponents';
 
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}>
-      <div className="bg-[var(--bg-panel)] rounded-2xl shadow-2xl w-full max-w-md border border-[var(--border-core)] overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--bg-panel-inner)]">
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto"
+      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="bg-[var(--bg-panel)] rounded-2xl shadow-2xl w-full max-w-md border border-[var(--border-core)] overflow-hidden my-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)] bg-[var(--bg-panel-inner)] sticky top-0">
           <h3 className="text-base font-semibold text-[var(--text-core)]">{title}</h3>
           <button onClick={onClose} className="p-1.5 hover:bg-[var(--border-subtle)] rounded-lg transition-colors">
             <X className="w-4 h-4 text-[var(--text-sec)]" />
           </button>
         </div>
-        <div className="px-6 py-5 bg-[var(--bg-panel)]">{children}</div>
+        <div className="px-6 py-5 bg-[var(--bg-panel)] overflow-y-auto max-h-[70vh]">{children}</div>
       </div>
     </div>
   );
