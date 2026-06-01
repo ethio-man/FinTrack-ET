@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Download, FileText, Share2, Printer, TrendingUp, TrendingDown, DollarSign, AlertCircle, Clock, FileSpreadsheet, Mail, Wallet } from 'lucide-react';
+import { FileText, Printer, TrendingUp, TrendingDown, DollarSign, AlertCircle, Clock, FileSpreadsheet, Wallet } from 'lucide-react';
 import { 
   profitLossData, monthlyProfitLoss, debtAgingData, debtCollectionSummary, 
   taxSummary, taxBreakdown, expensesByCategory, monthlyExpenseTrend, 
@@ -8,6 +8,8 @@ import {
 } from './mockData';
 import { translations } from './translations';
 import { LanguageOpt } from '../../types';
+import PrintSettingsModal, { PrintSettings, DEFAULT_PRINT_SETTINGS } from './PrintSettingsModal';
+import PrintableFormalReport from './PrintableFormalReport';
 
 const PeriodPicker = ({ selectedPeriod, onPeriodChange, t }: { selectedPeriod: string; onPeriodChange: (period: string) => void; t: any }) => {
   const periods = [
@@ -35,11 +37,10 @@ const PeriodPicker = ({ selectedPeriod, onPeriodChange, t }: { selectedPeriod: s
   );
 };
 
-const ExportBar = ({ t, selectedReport }: { t: any, selectedReport: string }) => {
+const ExportBar = ({ t, selectedReport, onOpenPrintModal }: { t: any; selectedReport: string; onOpenPrintModal: () => void }) => {
   const handleExportExcel = () => {
     let csv = '';
     const dateStr = new Date().toISOString().split('T')[0];
-
     if (selectedReport === 'profit-loss') {
       csv = 'Month,Revenue,Expenses,Profit\n' + monthlyProfitLoss.map(r => `${r.month},${r.revenue},${r.expenses},${r.profit}`).join('\n');
     } else if (selectedReport === 'debt') {
@@ -51,7 +52,6 @@ const ExportBar = ({ t, selectedReport }: { t: any, selectedReport: string }) =>
     } else if (selectedReport === 'cashflow') {
       csv = 'Day,CashIn,CashOut,Net\n' + cashFlowData.map(r => `${r.day},${r.cashIn},${r.cashOut},${r.net}`).join('\n');
     }
-
     if (!csv) return;
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
@@ -62,15 +62,18 @@ const ExportBar = ({ t, selectedReport }: { t: any, selectedReport: string }) =>
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
-        <FileText className="w-4 h-4 text-red-500" />
+      <button
+        onClick={onOpenPrintModal}
+        className="flex items-center gap-2 px-4 py-2 bg-[#0077C5] text-white rounded-lg hover:bg-[#005a96] transition-colors text-sm font-semibold shadow-sm"
+      >
+        <FileText className="w-4 h-4" />
         {t.exportPdf}
       </button>
       <button onClick={handleExportExcel} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
         <FileSpreadsheet className="w-4 h-4 text-green-600" />
         {t.exportExcel}
       </button>
-      <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
+      <button onClick={onOpenPrintModal} className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-panel)] border border-[var(--border-core)] rounded-lg hover:bg-[var(--bg-panel-inner)] text-[var(--text-core)] transition-colors text-sm font-medium shadow-sm">
         <Printer className="w-4 h-4 text-[var(--text-sec)]" />
         {t.print}
       </button>
@@ -654,8 +657,16 @@ const CashFlowReport = ({ t }: { t: any }) => {
 export default function ReportsView({ language }: { language: LanguageOpt }) {
   const [selectedReport, setSelectedReport] = useState<'profit-loss' | 'debt' | 'tax' | 'expense' | 'cashflow'>('profit-loss');
   const [selectedPeriod, setSelectedPeriod] = useState('Month');
+  const [printModalOpen, setPrintModalOpen] = useState(false);
+  const [printSettings, setPrintSettings] = useState<PrintSettings>(DEFAULT_PRINT_SETTINGS);
 
   const t = translations[language.code as keyof typeof translations] || translations.en;
+
+  const handlePrint = () => {
+    setPrintModalOpen(false);
+    // Small delay to let the modal close before printing
+    setTimeout(() => window.print(), 100);
+  };
 
   const reportTabs = [
     { id: 'profit-loss', label: t.profitLoss, icon: TrendingUp },
@@ -674,7 +685,7 @@ export default function ReportsView({ language }: { language: LanguageOpt }) {
             <h1 className="text-2xl font-bold text-[var(--text-core)] mb-1 tracking-tight">{t.reportsHub}</h1>
             <p className="text-sm font-medium text-[var(--text-sec)]">{t.reportsDesc}</p>
           </div>
-          <ExportBar t={t} selectedReport={selectedReport} />
+          <ExportBar t={t} selectedReport={selectedReport} onOpenPrintModal={() => setPrintModalOpen(true)} />
         </div>
 
         {/* Report Tabs */}
@@ -709,13 +720,25 @@ export default function ReportsView({ language }: { language: LanguageOpt }) {
       </div>
 
       {/* Report Content */}
-      <div className="print:m-0">
+      <div className="print:hidden">
         {selectedReport === 'profit-loss' && <ProfitLossReport t={t} />}
         {selectedReport === 'debt' && <DebtReport t={t} />}
         {selectedReport === 'tax' && <TaxReport t={t} />}
         {selectedReport === 'expense' && <ExpenseReport t={t} />}
         {selectedReport === 'cashflow' && <CashFlowReport t={t} />}
       </div>
+
+      {/* Print Settings Modal */}
+      <PrintSettingsModal
+        open={printModalOpen}
+        onClose={() => setPrintModalOpen(false)}
+        settings={printSettings}
+        onChange={setPrintSettings}
+        onPrint={handlePrint}
+      />
+
+      {/* Hidden Formal Print Document — revealed only during window.print() */}
+      <PrintableFormalReport settings={printSettings} selectedReport={selectedReport} />
     </div>
   );
 }
