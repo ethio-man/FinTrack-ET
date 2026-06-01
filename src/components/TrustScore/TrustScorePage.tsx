@@ -82,11 +82,11 @@ function ConsentModal({ onClose, onConfirm, t }: { onClose: () => void; onConfir
           </button>
         </div>
         <div className="px-6 py-5 space-y-4">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 flex gap-3">
-            <Shield className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-            <div className="text-sm text-blue-900 dark:text-blue-200">
+          <div className="bg-[var(--bg-panel-inner)] border border-[var(--border-core)] rounded-xl p-4 flex gap-3">
+            <Shield className="w-5 h-5 text-[#0077C5] shrink-0 mt-0.5" />
+            <div className="text-sm text-[var(--text-core)]">
               <p className="mb-2 font-medium">{t.reportIncludes}</p>
-              <ul className="list-disc list-inside space-y-1 text-xs">
+              <ul className="list-disc list-inside space-y-1 text-xs text-[var(--text-sec)]">
                 <li>{t.includeScore}</li>
                 <li>{t.includeHistory}</li>
                 <li>{t.includeRevenue}</li>
