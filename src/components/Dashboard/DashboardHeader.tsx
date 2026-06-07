@@ -175,7 +175,7 @@ export default function DashboardHeader({
           </span>
         </div>
 
-        {/* MIDDLE SIDE: Centered global search engine with simulated smart command menu */}
+        {/* MIDDLE SIDE: Centered global search engine with simulated smart command menu... */}
         <div className="docs-search flex-1 max-w-md relative hidden md:block">
           <div
             className={`relative flex items-center w-full bg-[var(--bg-core)] border rounded-lg transition-all ${
