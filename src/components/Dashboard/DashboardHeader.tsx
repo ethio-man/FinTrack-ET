@@ -111,7 +111,7 @@ export default function DashboardHeader({
       id="dashboard-header"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4">
-        {/* LEFT SIDE: Brand Logo and Responsive Menu Toggler */}
+        {/* LEFT SIDE: Brand Logo and Responsive Menu Toggler ..*/}
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -175,7 +175,7 @@ export default function DashboardHeader({
           </span>
         </div>
 
-        {/* MIDDLE SIDE: Centered global search engine with simulated smart command menu */}
+        {/* MIDDLE SIDE: Centered global search engine with simulated smart command menu... */}
         <div className="docs-search flex-1 max-w-md relative hidden md:block">
           <div
             className={`relative flex items-center w-full bg-[var(--bg-core)] border rounded-lg transition-all ${

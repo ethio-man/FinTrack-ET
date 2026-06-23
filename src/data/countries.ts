@@ -6,8 +6,6 @@ export const LANGUAGES: LanguageOpt[] = [
 ];
 
 export const COUNTRIES: CountryOpt[] = [
-  { code: "AF", redirect: "global", currency: "AFN", flag: "🇦🇫", name: "Afghanistan" },
-  { code: "AX", redirect: "eu", flag: "🇦🇽", name: "Aland Islands" },
   { code: "AL", redirect: "eu", flag: "🇦🇱", name: "Albania" },
   { code: "DZ", redirect: "global", currency: "DZD", flag: "🇩🇿", name: "Algeria" },
   { code: "AS", redirect: "us", flag: "🇦🇸", name: "American Samoa" },
