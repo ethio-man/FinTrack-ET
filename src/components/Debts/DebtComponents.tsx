@@ -25,7 +25,7 @@ export function StatusBadge({ debt, language }: { debt: Debt; language: Language
 
   if (isSettled(debt)) {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-700 whitespace-nowrap">
         <CheckCircle className="w-3 h-3" /> {t.settled}
       </span>
     );
@@ -33,14 +33,14 @@ export function StatusBadge({ debt, language }: { debt: Debt; language: Language
   if (isOverdue(debt)) {
     const days = Math.abs(daysUntil(debt.dueDate));
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-700">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-700 whitespace-nowrap">
         <AlertTriangle className="w-3 h-3" /> {days}d {t.overdue}
       </span>
     );
   }
   const d = daysUntil(debt.dueDate);
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-700 whitespace-nowrap">
       <Clock className="w-3 h-3" /> {isAm ? `${d} ${t.dueIn}` : `${t.dueIn} ${d}d`}
     </span>
   );
@@ -79,9 +79,9 @@ export function DebtRow({ debt, onClick, onSms, language }: { key?: React.Key; d
     >
       <Avatar initials={debt.contactAvatar} color={overdue && !settled ? 'red' : 'indigo'} />
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-0.5">
-          <span className="text-sm text-[var(--text-core)]">{debt.contactName}</span>
+      <div className="flex-1 min-w-0 pr-2">
+        <div className="flex flex-wrap items-center gap-2 mb-0.5">
+          <span className="text-sm text-[var(--text-core)] font-medium truncate max-w-[120px] sm:max-w-xs">{debt.contactName}</span>
           <StatusBadge debt={debt} language={language} />
         </div>
         <p className="text-xs text-[var(--text-sec)] truncate max-w-xs">{debt.description}</p>
@@ -93,11 +93,11 @@ export function DebtRow({ debt, onClick, onSms, language }: { key?: React.Key; d
         </div>
       </div>
 
-      <div className="text-right shrink-0">
+      <div className="text-right shrink-0 ml-auto">
         <p className={`text-sm font-medium ${settled ? 'text-green-600' : overdue ? 'text-red-600' : 'text-[var(--text-core)]'}`}>
           {fmt(bal)}
         </p>
-        <p className="text-xs text-[var(--text-mute)]">{t.due} {formatDate(debt.dueDate)}</p>
+        <p className="text-xs text-[var(--text-mute)] whitespace-nowrap">{t.due} {formatDate(debt.dueDate)}</p>
       </div>
 
       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={e => e.stopPropagation()}>

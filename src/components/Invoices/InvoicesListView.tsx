@@ -128,9 +128,9 @@ export default function InvoicesListView({ invoices, onNew, onView, language }: 
       </div>
 
       {/* Summary strip */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Metric cards */}
-        <div className="xl:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {[
             { label: t.totalInvoiced, value: totals.totalInvoiced, color: 'text-[var(--text-core)]', bg: 'bg-[var(--border-subtle)]', icon: FileText, iconColor: 'text-[var(--text-sec)]' },
             { label: t.collected,     value: totals.totalPaid,     color: 'text-green-500',          bg: 'bg-green-500/10',           icon: CheckCircle, iconColor: 'text-green-500' },
@@ -142,7 +142,7 @@ export default function InvoicesListView({ invoices, onNew, onView, language }: 
                 <div className={`p-2.5 rounded-xl ${bg}`}><Icon className={`w-4 h-4 ${iconColor}`} /></div>
                 <span className="text-xs font-medium text-[var(--text-sec)]">{label}</span>
               </div>
-              <p className={`text-2xl font-bold tracking-tight ${color}`}>ETB {(value / 1000).toFixed(1)}k</p>
+              <p className={`text-xl sm:text-2xl font-bold tracking-tight ${color}`}>ETB {(value / 1000).toFixed(1)}k</p>
             </div>
           ))}
         </div>
@@ -190,17 +190,17 @@ export default function InvoicesListView({ invoices, onNew, onView, language }: 
       {/* Tabs + search + Table */}
       <div className="bg-[var(--bg-panel)] rounded-xl shadow-sm border border-[var(--border-subtle)] overflow-hidden">
         <div className="flex flex-col sm:flex-row items-center justify-between px-5 border-b border-[var(--border-subtle)] gap-4 py-2 sm:py-0">
-          <div className="flex overflow-x-auto w-full sm:w-auto">
+          <div className="flex overflow-x-auto w-full sm:w-auto no-scrollbar">
             {(['all', 'draft', 'sent', 'paid', 'overdue'] as const).map(tab => {
               const isSelected = activeTab === tab;
               const label = tab === 'all' ? t.all : (t[tab as keyof typeof t] || STATUS_META[tab].label);
               return (
                 <button key={tab} onClick={() => setActiveTab(tab)}
-                  className={`flex items-center gap-2 px-4 py-4 text-sm whitespace-nowrap border-b-2 transition-colors font-medium ${
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm whitespace-nowrap border-b-2 transition-colors font-medium ${
                     isSelected ? 'border-indigo-500 text-indigo-500' : 'border-transparent text-[var(--text-sec)] hover:text-[var(--text-core)]'
                   }`}>
                   {label}
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${isSelected ? 'bg-indigo-500/10 text-indigo-500' : 'bg-[var(--border-subtle)] text-[var(--text-mute)]'}`}>
+                  <span className={`text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${isSelected ? 'bg-indigo-500/10 text-indigo-500' : 'bg-[var(--border-subtle)] text-[var(--text-mute)]'}`}>
                     {tabCounts[tab]}
                   </span>
                 </button>

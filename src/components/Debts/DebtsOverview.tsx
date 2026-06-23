@@ -123,24 +123,24 @@ export default function DebtsOverview({ debts, onSelect, onDebtAdded, language }
 
       {/* Tabs + list */}
       <div className="bg-[var(--bg-panel)] rounded-xl shadow-sm border border-[var(--border-subtle)] overflow-hidden">
-        <div className="flex items-center justify-between px-5 border-b border-[var(--border-subtle)]">
-          <div className="flex">
+        <div className="flex flex-col sm:flex-row items-center justify-between px-5 border-b border-[var(--border-subtle)] gap-3 py-2 sm:py-0">
+          <div className="flex overflow-x-auto w-full sm:w-auto no-scrollbar">
             {(['receivable', 'payable'] as const).map(tab => {
               const count = debts.filter(d => d.type === tab && !isSettled(d)).length;
               const overdueCount = debts.filter(d => d.type === tab && isOverdue(d)).length;
               const label = tab === 'receivable' ? t.receivables : t.payables;
               return (
                 <button key={tab} onClick={() => setActiveTab(tab)}
-                  className={`flex items-center gap-2 px-5 py-4 text-sm border-b-2 transition-colors ${
+                  className={`flex items-center gap-2 px-4 sm:px-5 py-3 sm:py-4 text-sm border-b-2 transition-colors whitespace-nowrap ${
                     activeTab === tab ? 'border-indigo-600 text-indigo-500' : 'border-transparent text-[var(--text-sec)] hover:text-[var(--text-core)]'
                   }`}
                 >
                   {label}
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                  <span className={`text-xs px-1.5 py-0.5 rounded-full whitespace-nowrap ${
                     activeTab === tab ? 'bg-indigo-500/10 text-indigo-500' : 'bg-[var(--bg-panel-inner)] text-[var(--text-sec)]'
                   }`}>{count}</span>
                   {overdueCount > 0 && (
-                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-500/10 text-red-500">{overdueCount} {t.overdue}</span>
+                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-500/10 text-red-500 whitespace-nowrap">{overdueCount} {t.overdue}</span>
                   )}
                 </button>
               );
@@ -149,7 +149,7 @@ export default function DebtsOverview({ debts, onSelect, onDebtAdded, language }
 
           <button
             onClick={() => setFilterOverdue(v => !v)}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+            className={`flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors shrink-0 w-full sm:w-auto ${
               filterOverdue ? 'bg-red-500/10 text-red-500 border border-red-500/20' : 'bg-[var(--bg-panel-inner)] text-[var(--text-sec)] hover:bg-[var(--border-subtle)]'
             }`}
           >
