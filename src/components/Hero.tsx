@@ -1,6 +1,7 @@
 import React from "react";
 import { LanguageOpt } from "../types";
 import { TRANSLATIONS } from "../data/translations";
+import heroImg from "../../assets/public/hero.png";
 
 interface HeroProps {
   selectedLanguage: LanguageOpt;
@@ -71,7 +72,7 @@ export default function Hero({ selectedLanguage, onOpenLogin }: HeroProps) {
               <img
                 className="w-full h-auto object-contain rounded-lg transition-transform duration-500 group-hover:scale-[1.01] transition-all"
                 style={{ filter: "var(--filter-invert)" }}
-                src="../../assets/public/hero.png"
+                src={heroImg}
                 alt="FinTrack ET financial intelligence platform display on laptop device interface"
                 loading="eager"
               />

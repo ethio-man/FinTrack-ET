@@ -58,7 +58,7 @@ export default function InventoryListView({ products, onSelect, onProductAdded, 
 
   function handleExport() {
     const rows = ['SKU,Name,Category,Stock,Unit,Buying Price,Selling Price,Markup %,Status',
-      ...products.map(p => `${p.sku},"${p.name}",${p.category},${p.stock},${p.unit},${p.buyingPrice},${p.sellingPrice},${markup(p)}%,${p.status}`)
+      ...products.map(p => `${p.sku},"ETB {p.name}",${p.category},${p.stock},${p.unit},${p.buyingPrice},${p.sellingPrice},${markup(p)}%,${p.status}`)
     ].join('\n');
     const blob = new Blob([rows], { type: 'text/csv' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'inventory.csv'; a.click();

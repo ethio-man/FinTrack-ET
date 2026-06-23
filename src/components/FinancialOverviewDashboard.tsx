@@ -62,7 +62,7 @@ const KPICard = ({ title, value, change, isPositive, icon: Icon, color, vsLabel 
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <p className="text-[var(--text-sec)] text-sm mb-1 font-semibold">{title}</p>
-          <h3 className="text-3xl mt-2 mb-3 font-black text-[var(--text-core)]">${value.toLocaleString()}</h3>
+          <h3 className="text-3xl mt-2 mb-3 font-black text-[var(--text-core)]">ETB ${value.toLocaleString()}</h3>
           <div className={`flex items-center gap-1 text-sm font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
             {isPositive ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
             <span>{isPositive ? '+' : '-'}{Math.abs(change)}%</span>
@@ -96,7 +96,7 @@ const TransactionItem = ({ transaction }: any) => {
       </div>
       <div className="flex items-center gap-3">
         <span className={`text-sm font-bold ${isIncome ? 'text-green-500' : 'text-red-500'}`}>
-          {isIncome ? '+' : ''}{transaction.amount < 0 ? transaction.amount : `$${transaction.amount.toLocaleString()}`}
+          {isIncome ? '+' : ''}{transaction.amount < 0 ? transaction.amount : `ETB ${transaction.amount.toLocaleString()}`}
         </span>
         <div className={`w-2 h-2 rounded-full ${isIncome ? 'bg-green-500' : 'bg-red-500'}`}></div>
       </div>
@@ -117,7 +117,7 @@ const DebtorCard = ({ debtor }: any) => {
         </div>
       </div>
       <div className="text-right">
-        <p className="text-sm font-bold text-[var(--text-core)]">${debtor.amount.toLocaleString()}</p>
+        <p className="text-sm font-bold text-[var(--text-core)]">ETB ${debtor.amount.toLocaleString()}</p>
         <p className="text-xs text-[var(--text-sec)]">{debtor.location}</p>
       </div>
     </div>
@@ -157,7 +157,7 @@ const ReminderItem = ({ reminder }: any) => {
           <p className="text-xs text-[var(--text-sec)]">{reminder.type} - {reminder.time}</p>
         </div>
       </div>
-      <span className="text-sm font-bold text-[var(--text-core)]">${reminder.amount.toLocaleString()}</span>
+      <span className="text-sm font-bold text-[var(--text-core)]">ETB ${reminder.amount.toLocaleString()}</span>
     </div>
   );
 };

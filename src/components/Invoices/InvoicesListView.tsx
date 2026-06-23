@@ -97,7 +97,7 @@ export default function InvoicesListView({ invoices, onNew, onView, language }: 
     const rows = ['Number,Customer,Date,Due Date,Status,Total',
       ...invoices.map(inv => {
         const { total } = calcInvoice(inv);
-        return `${inv.number},"${inv.customer}",${inv.date},${inv.dueDate},${inv.status},${total.toFixed(2)}`;
+        return `${inv.number},"ETB {inv.customer}",${inv.date},${inv.dueDate},${inv.status},${total.toFixed(2)}`;
       })
     ].join('\n');
     const blob = new Blob([rows], { type: 'text/csv' });

@@ -1,6 +1,9 @@
 import React from "react";
 import { LanguageOpt } from "../types";
 import { TRANSLATIONS } from "../data/translations";
+import featureImg from "../../assets/public/feature.jpg";
+import trackingImg from "../../assets/public/tracking.png";
+import paymentImg from "../../assets/public/payment.png";
 
 export default function Features({ selectedLanguage }: { selectedLanguage: LanguageOpt }) {
   const t = TRANSLATIONS[selectedLanguage.code] || TRANSLATIONS.en;
@@ -29,7 +32,7 @@ export default function Features({ selectedLanguage }: { selectedLanguage: Langu
           <div className="lg:col-span-6 flex justify-center">
             <div className="bg-[var(--bg-panel)] p-1.5 border border-[var(--border-core)] shadow-2xl rounded-none w-full max-w-lg transition-colors">
               <img
-                src="../../assets/public/feature.jpg"
+                src={featureImg}
                 alt="Ethiopian merchant registering transaction metrics on mobile interface"
                 className="w-full h-auto object-cover opacity-90 rounded-none filter brightness-95"
                 loading="lazy"
@@ -60,7 +63,7 @@ export default function Features({ selectedLanguage }: { selectedLanguage: Langu
           <div className="lg:col-span-6 lg:order-1 flex justify-center">
             <div className="bg-[var(--bg-core)] p-1.5 border border-[var(--border-core)] shadow-2xl rounded-none w-full max-w-lg transition-colors">
               <img
-                src="../../assets/public/tracking.png"
+                src={trackingImg}
                 alt="Low stock warning signs and levels dashboard illustration"
                 className="w-full h-auto object-cover opacity-95 rounded-none filter brightness-95"
                 loading="lazy"
@@ -88,7 +91,7 @@ export default function Features({ selectedLanguage }: { selectedLanguage: Langu
           <div className="lg:col-span-6 flex justify-center">
             <div className="bg-[var(--bg-panel)] p-1.5 border border-[var(--border-core)] shadow-2xl rounded-none w-full max-w-lg transition-colors">
               <img
-                src="../../assets/public/payment.png"
+                src={paymentImg}
                 alt="Telebirr and payment gateways syncing with merchant financial books illustration"
                 className="w-full h-auto object-cover opacity-90 rounded-none filter brightness-95"
                 loading="lazy"

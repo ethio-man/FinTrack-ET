@@ -135,8 +135,8 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
                     <tr key={item.id} className="border-b border-[var(--border-subtle)]">
                       <td className="py-3 text-sm">{item.product}</td>
                       <td className="py-3 text-sm text-right">{item.quantity}</td>
-                      <td className="py-3 text-sm text-right">${item.unitPrice.toFixed(2)}</td>
-                      <td className="py-3 text-sm text-right">${item.subtotal.toFixed(2)}</td>
+                      <td className="py-3 text-sm text-right">ETB ${item.unitPrice.toFixed(2)}</td>
+                      <td className="py-3 text-sm text-right">ETB ${item.subtotal.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -148,17 +148,17 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
               <div className="w-64 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-[var(--text-sec)]">{t.subtotal}</span>
-                  <span>${sale.subtotal.toFixed(2)}</span>
+                  <span>ETB ${sale.subtotal.toFixed(2)}</span>
                 </div>
                 {sale.discount > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-[var(--text-sec)]">{t.discount}</span>
-                    <span className="text-red-600">-${sale.discount.toFixed(2)}</span>
+                    <span className="text-red-600">-ETB ${sale.discount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between pt-2 border-t border-[var(--border-core)]">
                   <span className="text-lg">{t.total}</span>
-                  <span className="text-lg">${sale.total.toFixed(2)}</span>
+                  <span className="text-lg">ETB ${sale.total.toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -192,7 +192,7 @@ function SaleDetailView({ saleId, onBack, onEdit, selectedLanguage }: { saleId: 
               <div className="pt-3 border-t border-[var(--border-core)]">
                 <div className="flex justify-between text-sm mb-2">
                   <span className="text-[var(--text-sec)]">{t.amountPaid}</span>
-                  <span className="text-green-600">${sale.amountPaid.toFixed(2)}</span>
+                  <span className="text-green-600">ETB ${sale.amountPaid.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-[var(--text-sec)]">{t.balanceDue}</span>

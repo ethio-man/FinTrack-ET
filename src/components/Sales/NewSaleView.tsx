@@ -183,7 +183,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
                       <p className="text-sm">{product.name}</p>
                       <p className="text-xs text-[var(--text-mute)]">{product.category} • {product.stock} in stock</p>
                     </div>
-                    <span className="text-sm">${product.price}</span>
+                    <span className="text-sm">ETB ${product.price}</span>
                   </button>
                 ))}
               </div>
@@ -215,8 +215,8 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
                             className="w-16 px-2 py-1 border border-[var(--border-core)] rounded text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm">${item.unitPrice.toFixed(2)}</td>
-                        <td className="px-4 py-3 text-sm">${item.subtotal.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-sm">ETB ${item.unitPrice.toFixed(2)}</td>
+                        <td className="px-4 py-3 text-sm">ETB ${item.subtotal.toFixed(2)}</td>
                         <td className="px-4 py-3">
                           <button
                             onClick={() => removeLineItem(item.id)}
@@ -306,7 +306,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
             <div className="space-y-3 mb-4 pb-4 border-b border-[var(--border-core)]">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-[var(--text-sec)]">{t.subtotal}</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>ETB ${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-[var(--text-sec)]">{t.discount}</span>
@@ -324,7 +324,7 @@ function NewSaleView({ onBack, selectedLanguage }: { onBack: () => void; selecte
 
             <div className="flex items-center justify-between mb-6">
               <span className="text-lg">{t.total}</span>
-              <span className="text-2xl">${finalAmount.toFixed(2)}</span>
+              <span className="text-2xl">ETB ${finalAmount.toFixed(2)}</span>
             </div>
 
             <div className="space-y-3">

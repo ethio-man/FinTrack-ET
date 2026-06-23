@@ -111,11 +111,11 @@ const TrustScoreCertificatePage = ({ settings }: { settings: PrintSettings }) =>
           return (
             <div className="pfs-data-row" key={i}>
               <div className="pfs-cell-group">
-                <div className="pfs-cell-label">{factor ? `${factor.nameKey.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())} (${factor.weight}%)` : ''}</div>
+                <div className="pfs-cell-label">{factor ? `${factor.nameKey.replace(/([A-Z])/g, ' ETB 1').replace(/^./, s => s.toUpperCase())} (${factor.weight}%)` : ''}</div>
                 <div className="pfs-cell-value">{factor ? `${factor.score}/100` : ''}</div>
               </div>
               <div className="pfs-cell-group">
-                <div className="pfs-cell-label">{badge ? badge.nameKey.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()) : ''}</div>
+                <div className="pfs-cell-label">{badge ? badge.nameKey.replace(/([A-Z])/g, ' ETB 1').replace(/^./, s => s.toUpperCase()) : ''}</div>
                 <div className="pfs-cell-value" style={{ color: badge ? (badge.verified ? '#16a34a' : '#9ca3af') : undefined }}>
                   {badge ? (badge.verified ? '✓ Verified' : 'Pending') : ''}
                 </div>

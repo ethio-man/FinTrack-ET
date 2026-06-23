@@ -99,7 +99,7 @@ export default function ExpensesListView({ onNew, language }: ExpensesListViewPr
 
   function handleExport() {
     const rows = ['Date,Category,Description,Amount (ETB)',
-      ...filtered.map(e => `${e.date},${e.category},"${e.description}",${e.amount}`)
+      ...filtered.map(e => `${e.date},${e.category},"ETB {e.description}",${e.amount}`)
     ].join('\n');
     const blob = new Blob([rows], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
